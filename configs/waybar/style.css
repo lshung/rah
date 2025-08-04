@@ -1,0 +1,186 @@
+@import "catppuccin-mocha.css";
+
+/* Global styles */
+* {
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+window#waybar {
+    background: linear-gradient(135deg, @base 0%, @mantle 100%);
+    color: @text;
+    border-bottom: 0px solid @overlay0;
+    box-shadow: 0 2px 20px alpha(@base, 0.3);
+    transition: all 0.3s ease;
+}
+
+.modules-left, .modules-right, .modules-center {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* Hyprland workspaces */
+#workspaces {
+    background: @surface0;
+    border-radius: 8px;
+    margin: 5px 0px;
+    padding: 1px;
+    border: 1px solid @overlay0;
+}
+
+#workspaces button {
+    padding: 3px 8px;
+    margin: 1px;
+    color: @surface2;
+    background: @surface0;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+#workspaces button:hover {
+    background: alpha(@blue, 0.1);
+    color: @blue;
+    border-color: alpha(@blue, 0.3);
+}
+
+#workspaces button.active {
+    color: @text;
+    background: linear-gradient(135deg, alpha(@blue, 0.2) 0%, alpha(@blue, 0.1) 100%);
+    border-color: alpha(@blue, 0.5);
+    box-shadow: 0 2px 8px alpha(@blue, 0.2);
+}
+
+#workspaces button.urgent {
+    color: @red;
+    background: alpha(@red, 0.1);
+    border-color: alpha(@red, 0.3);
+}
+
+/* Hyprland window */
+#window {
+    color: @subtext0;
+    background: @surface0;
+    padding: 4px 8px;
+    margin: 5px 0px;
+    margin-left: 5px;
+    border-radius: 6px;
+    border: 1px solid @overlay0;
+}
+
+/* System modules container */
+#cpu, #memory, #temperature, #network, #pulseaudio, #battery, #tray {
+    background: @surface0;
+    padding: 4px 8px;
+    margin: 5px 0px;
+    margin-right: 2px;
+    border-radius: 6px;
+    border: 1px solid @overlay0;
+    transition: all 0.3s ease;
+}
+
+#cpu:hover, #memory:hover, #temperature:hover, #network:hover, #pulseaudio:hover, #battery:hover, #tray:hover {
+    background: @surface1;
+    border-color: alpha(@yellow, 0.5);
+    box-shadow: 0 2px 8px alpha(@base, 0.2);
+}
+
+/* Individual module colors */
+#cpu {
+    color: @teal;
+    border-color: alpha(@teal, 0.2);
+}
+
+#memory {
+    color: @mauve;
+    border-color: alpha(@mauve, 0.2);
+}
+
+#temperature {
+    color: @peach;
+    border-color: alpha(@peach, 0.2);
+}
+
+#temperature.critical {
+    color: @red;
+    background: alpha(@red, 0.1);
+    border-color: alpha(@red, 0.3);
+}
+
+#network {
+    color: @blue;
+    border-color: alpha(@blue, 0.2);
+}
+
+#network.disconnected {
+    color: @red;
+    background: alpha(@red, 0.1);
+    border-color: alpha(@red, 0.3);
+}
+
+#pulseaudio {
+    color: @sapphire;
+    border-color: alpha(@sapphire, 0.2);
+}
+
+#pulseaudio.muted {
+    color: @subtext0;
+    background: alpha(@subtext0, 0.1);
+    border-color: alpha(@subtext0, 0.2);
+}
+
+#battery {
+    color: @green;
+    border-color: alpha(@green, 0.2);
+}
+
+#battery.warning {
+    color: @yellow;
+    background: alpha(@yellow, 0.1);
+    border-color: alpha(@yellow, 0.3);
+}
+
+#battery.critical {
+    color: @red;
+    background: alpha(@red, 0.1);
+    border-color: alpha(@red, 0.3);
+}
+
+#clock {
+    color: @rosewater;
+    font-weight: 600;
+}
+
+#tray {
+    background: @surface0;
+    border-radius: 6px;
+    border: 1px solid @overlay0;
+    margin-left: 5px;
+    margin-right: 0;
+    padding: 4px 6px;
+}
+
+#tray > * {
+    padding: 0 4px;
+}
+
+/* Tooltip styling */
+tooltip {
+    background: @base;
+    color: @text;
+    border: 1px solid @overlay1;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+/* Module icons */
+#cpu, #memory, #temperature, #network, #pulseaudio, #battery, #clock {
+    font-size: 12px;
+}

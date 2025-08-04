@@ -1,0 +1,105 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 40,
+    "font": {
+        "family": "system-ui, sans-serif",
+        "size": 11
+    },
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "battery", "tray"],
+
+    // Hyprland-specific modules
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "active-only": false,
+        "format-icons": {
+            "default": "\uf111",
+            "active": "\uf192",
+            "urgent": "\udb86\udc07"
+        },
+        "swap-icon-label": false
+    },
+
+    "hyprland/window": {
+        "max-length": 58,
+        "separate-outputs": true,
+        "swap-icon-label": false
+    },
+
+    // System modules
+    "clock": {
+        "timezone": "Asia/Ho_Chi_Minh",
+        "format": "\uf073 {:%Y-%m-%d \udb82\udd54 %H:%M:%S}",
+        "tooltip-format": "{:%A, %d %B %Y | %H:%M}",
+        "interval": 1,
+        "swap-icon-label": false
+    },
+
+    "cpu": {
+        "format": "\uf4bc {usage}%",
+        "interval": 5,
+        "swap-icon-label": false
+    },
+
+    "memory": {
+        "format": "\uefc5 {used:0.1f}GB/{total:0.1f}GB",
+        "interval": 5,
+        "tooltip": false,
+        "swap-icon-label": false
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "\uf2c9 {temperatureC}°C",
+        "format-critical": "\uef2a {temperatureC}°C",
+        "swap-icon-label": false
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "\udb85\udc0b {capacity}%",
+        "format-plugged": "\uf1e6 {capacity}%",
+        "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
+        "interval": 10,
+        "swap-icon-label": false,
+        "hidden": true
+    },
+
+    "network": {
+        "format-wifi": "\udb81\udda9 {essid} ({signalStrength}%)",
+        "format-ethernet": "\udb80\ude00 {ifname} ({ipaddr})",
+        "format-disconnected": "\udb81\uddaa Disconnected",
+        "interval": 5,
+        "swap-icon-label": false
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": "\udb81\udf5f Muted",
+        "format-icons": {
+            "headphone": "\uf025",
+            "hands-free": "\uee59",
+            "headset": "\udb80\udece",
+            "phone": "\uf095",
+            "portable": "\uf095",
+            "car": "\uf1b9",
+            "default": ["\ue638", "\udb81\udf1f"]
+        },
+        "swap-icon-label": false,
+        "scroll-step": 5,
+        "on-click": "pavucontrol"
+    },
+
+    "tray": {
+        "spacing": 10,
+        "swap-icon-label": false
+    }
+}
