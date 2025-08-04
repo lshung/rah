@@ -12,7 +12,8 @@
 }
 
 window#waybar {
-    background: linear-gradient(135deg, @base 0%, @mantle 100%);
+    background-color: transparent;
+    border: none;
     color: @text;
     border-bottom: 0px solid @overlay0;
     box-shadow: 0 2px 20px alpha(@base, 0.3);
