@@ -28,4 +28,9 @@ rm -rf "$HOME"/.config/waybar/*
 cp -r ./configs/waybar/* "$HOME"/.config/waybar/
 waybar &
 
-echo "Cập nhật cấu hình thành công!"
+# Cập nhật cấu hình Kitty
+echo "Cập nhật cấu hình Kitty..."
+rm -rf "$HOME"/.config/kitty/*
+cp -r ./configs/kitty/* "$HOME"/.config/kitty/
+
+echo "Cập nhật cấu hình thành công! Hãy logout để áp dụng các thay đổi."
