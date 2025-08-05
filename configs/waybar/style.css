@@ -76,7 +76,7 @@ window#waybar {
 }
 
 /* System modules container */
-#cpu, #memory, #temperature, #network, #pulseaudio, #battery, #tray {
+#cpu, #memory, #temperature, #network, #pulseaudio, #battery, #tray, #custom-logout {
     background: @surface0;
     padding: 4px 8px;
     margin: 5px 0px;
@@ -86,7 +86,7 @@ window#waybar {
     transition: all 0.3s ease;
 }
 
-#cpu:hover, #memory:hover, #temperature:hover, #network:hover, #pulseaudio:hover, #battery:hover, #tray:hover {
+#cpu:hover, #memory:hover, #temperature:hover, #network:hover, #pulseaudio:hover, #battery:hover, #tray:hover, #custom-logout:hover {
     background: @surface1;
     border-color: alpha(@yellow, 0.5);
     box-shadow: 0 2px 8px alpha(@base, 0.2);
@@ -153,6 +153,14 @@ window#waybar {
     border-color: alpha(@red, 0.3);
 }
 
+#custom-logout {
+    color: @red;
+    border-color: alpha(@red, 0.2);
+    margin-left: 5px;
+    margin-right: 0;
+    padding-right: 10px;
+}
+
 #clock {
     color: @rosewater;
     font-weight: 600;
@@ -163,7 +171,6 @@ window#waybar {
     border-radius: 6px;
     border: 1px solid @overlay0;
     margin-left: 5px;
-    margin-right: 0;
     padding: 4px 6px;
 }
 

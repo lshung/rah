@@ -8,7 +8,7 @@
     },
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "battery", "tray"],
+    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "battery", "tray", "custom/logout"],
 
     // Hyprland-specific modules
     "hyprland/workspaces": {
@@ -101,5 +101,12 @@
     "tray": {
         "spacing": 10,
         "swap-icon-label": false
+    },
+
+    "custom/logout": {
+        "format": "\uf011",
+        "on-click": "wlogout --protocol layer-shell",
+        "tooltip": false,
+        "interval": "once"
     }
 }
