@@ -31,7 +31,6 @@
 
     // System modules
     "clock": {
-        "timezone": "Asia/Ho_Chi_Minh",
         "format": "\uf073 {:%Y-%m-%d \udb82\udd54 %H:%M:%S}",
         "tooltip-format": "{:%A, %d %B %Y | %H:%M}",
         "interval": 1,
