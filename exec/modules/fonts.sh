@@ -3,9 +3,17 @@
 # Thoát nếu có lỗi
 set -e
 
+echo "Cài đặt fonts..."
+
 # Cài đặt JetBrains Mono Nerd Font
 if ! fc-list | grep -q "JetBrainsMonoNerdFont"; then
     sudo pacman -S --noconfirm ttf-jetbrains-mono-nerd
+    fc-cache -fv
+fi
+
+# Cài đặt Cantarell Font
+if ! fc-list | grep -q "Cantarell"; then
+    sudo pacman -S --noconfirm cantarell-fonts
     fc-cache -fv
 fi
 

@@ -9,9 +9,9 @@ mkdir -p "$HOME"/.config/wlogout
 mkdir -p "$HOME"/.config/wlogout/icons
 
 rm -rf "$HOME"/.config/wlogout/style.css
-cp ./configs/wlogout/style.css "$HOME"/.config/wlogout/style.css
+cp "$CONFIGS_DIR"/wlogout/style.css "$HOME"/.config/wlogout/style.css
 rm -rf "$HOME"/.config/wlogout/layout
-cp ./configs/wlogout/layout "$HOME"/.config/wlogout/layout
+cp "$CONFIGS_DIR"/wlogout/layout "$HOME"/.config/wlogout/layout
 
 # Mảng tên các icon cần tải xuống
 icons=("hibernate" "lock" "logout" "reboot" "shutdown" "suspend")
