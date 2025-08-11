@@ -5,9 +5,15 @@ set -e
 
 echo "Cài đặt fonts..."
 
-# Cài đặt JetBrains Mono Nerd Font
+# Cài đặt JetBrainsMono Nerd Font
 if ! fc-list | grep -q "JetBrainsMonoNerdFont"; then
     sudo pacman -S --noconfirm ttf-jetbrains-mono-nerd
+    fc-cache -fv
+fi
+
+# Cài đặt CaskaydiaCove Nerd Font
+if ! fc-list | grep -q "CaskaydiaCoveNerdFont"; then
+    sudo pacman -S --noconfirm ttf-cascadia-code-nerd
     fc-cache -fv
 fi
 

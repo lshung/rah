@@ -16,6 +16,8 @@ source "$SCRIPT_DIR/exec/modules/icon-themes.sh"
 source "$SCRIPT_DIR/exec/modules/kitty.sh"
 source "$SCRIPT_DIR/exec/modules/wlogout.sh"
 source "$SCRIPT_DIR/exec/modules/nwg-look.sh"
+source "$SCRIPT_DIR/exec/modules/qtct.sh"
+source "$SCRIPT_DIR/exec/modules/kvantum.sh"
 source "$SCRIPT_DIR/exec/modules/hyprland.sh"
 source "$SCRIPT_DIR/exec/modules/waybar.sh"
 
