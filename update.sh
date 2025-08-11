@@ -7,9 +7,15 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 CONFIGS_DIR="$SCRIPT_DIR/configs"
 
+# Source các utility functions
+source "$SCRIPT_DIR/exec/utils/download.sh"
+
+# Source các modules
 source "$SCRIPT_DIR/exec/modules/fonts.sh"
+source "$SCRIPT_DIR/exec/modules/icon-themes.sh"
 source "$SCRIPT_DIR/exec/modules/kitty.sh"
 source "$SCRIPT_DIR/exec/modules/wlogout.sh"
+source "$SCRIPT_DIR/exec/modules/nwg-look.sh"
 source "$SCRIPT_DIR/exec/modules/hyprland.sh"
 source "$SCRIPT_DIR/exec/modules/waybar.sh"
 
