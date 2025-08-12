@@ -14,7 +14,7 @@ source "$SCRIPT_DIR/exec/utils/download.sh"
 source_module() {
     local module_name="$1"
     local module_file="$SCRIPT_DIR/exec/modules/${module_name}.sh"
-    
+
     if [[ -f "$module_file" ]]; then
         source "$module_file"
     else
@@ -36,6 +36,7 @@ show_usage() {
     echo "  --kvantum       Cập nhật module kvantum"
     echo "  --nwg-look      Cập nhật module nwg-look"
     echo "  --qtct          Cập nhật module qtct"
+    echo "  --rofi          Cập nhật module rofi"
     echo "  --waybar        Cập nhật module waybar"
     echo "  --wlogout       Cập nhật module wlogout"
     echo ""
@@ -51,6 +52,7 @@ if [[ $# -eq 0 ]]; then
     source "$SCRIPT_DIR/exec/modules/wlogout.sh"
     source "$SCRIPT_DIR/exec/modules/nwg-look.sh"
     source "$SCRIPT_DIR/exec/modules/qtct.sh"
+    source "$SCRIPT_DIR/exec/modules/rofi.sh"
     source "$SCRIPT_DIR/exec/modules/kvantum.sh"
     source "$SCRIPT_DIR/exec/modules/hyprland.sh"
     source "$SCRIPT_DIR/exec/modules/waybar.sh"
@@ -81,6 +83,9 @@ else
             ;;
         --qtct)
             source_module "qtct"
+            ;;
+        --rofi)
+            source_module "rofi"
             ;;
         --waybar)
             source_module "waybar"
