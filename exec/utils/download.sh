@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Kiểm tra xem script có được source hay không
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    echo "Lỗi: Script này chỉ được phép source, không được phép chạy trực tiếp."
+    exit 1
+fi
+
 # Hàm tải về với retry và timeout
 _download_with_retry() {
     local url="$1"
@@ -11,7 +17,7 @@ _download_with_retry() {
     while [ $retry_count -lt $max_retries ]; do
         echo "Đang tải về $(basename "$output") (lần thử $((retry_count + 1))/$max_retries)..."
 
-        if curl -L --connect-timeout $timeout --max-time $((timeout * 2)) -o "$output" "$url"; then
+        if curl -LsS --connect-timeout $timeout --max-time $((timeout * 2)) -o "$output" "$url"; then
             echo "Tải về $(basename "$output") thành công!"
             return 0
         else
