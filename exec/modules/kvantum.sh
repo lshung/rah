@@ -12,37 +12,32 @@ set -e
 echo "Cập nhật cấu hình Kvantum..."
 
 # Khai báo biến
-ROOT_URL="https://raw.githubusercontent.com/catppuccin/kvantum/main/themes"
-FLAVOR="mocha"
-ACCENT="peach"
-
-THEME_NAME="catppuccin-${FLAVOR}-${ACCENT}"
-SVG_FILE_NAME="${THEME_NAME}.svg"
-SVG_FILE_URL="${ROOT_URL}/${THEME_NAME}/${SVG_FILE_NAME}"
-KVCONFIG_FILE_NAME="${THEME_NAME}.kvconfig"
-KVCONFIG_FILE_URL="${ROOT_URL}/${THEME_NAME}/${KVCONFIG_FILE_NAME}"
-
 KVANTUM_CONFIG_DIR="$HOME/.config/Kvantum"
-THEME_DIR="$KVANTUM_CONFIG_DIR/${THEME_NAME}"
+THEME_FULL_NAME="${THEME_NAME}-${THEME_FLAVOR}-${THEME_ACCENT}"
+THEME_DIR="$KVANTUM_CONFIG_DIR/${THEME_FULL_NAME}"
 
-# Dọn dẹp thư mục
+BASE_URL="https://raw.githubusercontent.com/catppuccin/kvantum/main/themes"
+SVG_FILE_NAME="${THEME_FULL_NAME}.svg"
+SVG_FILE_URL="${BASE_URL}/${THEME_FULL_NAME}/${SVG_FILE_NAME}"
+KVCONFIG_FILE_NAME="${THEME_FULL_NAME}.kvconfig"
+KVCONFIG_FILE_URL="${BASE_URL}/${THEME_FULL_NAME}/${KVCONFIG_FILE_NAME}"
+
+# Dọn dẹp thư mục config của Kvantum
 mkdir -p "$KVANTUM_CONFIG_DIR"
 rm -rf "$THEME_DIR"
 mkdir -p "$THEME_DIR"
 
-# Tải về Catppuccin theme
-echo "Đang tải về $SVG_FILE_NAME..."
+# Tải về file svg và kvconfig
 if ! _download_with_retry "$SVG_FILE_URL" "$THEME_DIR/$SVG_FILE_NAME"; then
-    echo "Không thể tải về $SVG_FILE_NAME."
+    exit 1
 fi
 
-echo "Đang tải về $KVCONFIG_FILE_NAME..."
 if ! _download_with_retry "$KVCONFIG_FILE_URL" "$THEME_DIR/$KVCONFIG_FILE_NAME"; then
-    echo "Không thể tải về $KVCONFIG_FILE_NAME."
+    exit 1
 fi
 
 # Tạo config file cho Kvantum
 cat > "$KVANTUM_CONFIG_DIR/kvantum.kvconfig" << EOF
 [General]
-theme=${THEME_NAME}
+theme=${THEME_FULL_NAME}
 EOF
