@@ -1,4 +1,4 @@
-@import "catppuccin-mocha.css";
+@import "./colors/@@theme@@-@@flavor@@.css";
 
 /* Global styles */
 * {
