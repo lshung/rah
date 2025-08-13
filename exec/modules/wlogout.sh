@@ -11,24 +11,32 @@ set -e
 
 echo "Cập nhật cấu hình Wlogout..."
 
-mkdir -p "$HOME"/.config/wlogout
-mkdir -p "$HOME"/.config/wlogout/icons
+# Khai báo biến
+WLOGOUT_CONFIG_DIR="$HOME"/.config/wlogout
+ICON_BASE_URL="https://raw.githubusercontent.com/catppuccin/wlogout/main/icons/wlogout/$THEME_FLAVOR/$THEME_ACCENT"
+COLOR_URL="https://raw.githubusercontent.com/catppuccin/wlogout/main/themes/$THEME_FLAVOR/$THEME_ACCENT.css"
+ICON_NAMES=("hibernate" "lock" "logout" "reboot" "shutdown" "suspend")
 
-rm -rf "$HOME"/.config/wlogout/style.css
-cp "$CONFIGS_DIR"/wlogout/style.css "$HOME"/.config/wlogout/style.css
-rm -rf "$HOME"/.config/wlogout/layout
-cp "$CONFIGS_DIR"/wlogout/layout "$HOME"/.config/wlogout/layout
+# Dọn dẹp thư mục config của Wlogout
+mkdir -p "$WLOGOUT_CONFIG_DIR"
+rm -rf "$WLOGOUT_CONFIG_DIR"/*
+mkdir -p "$WLOGOUT_CONFIG_DIR"/icons
 
-# Mảng tên các icon cần tải xuống
-icons=("hibernate" "lock" "logout" "reboot" "shutdown" "suspend")
-# URL cơ sở cho các icon
-base_url="https://raw.githubusercontent.com/catppuccin/wlogout/main/icons/wlogout/mocha/peach"
+# Sao chép template cấu hình Wlogout
+cp "$CONFIGS_DIR/wlogout/style.css" "$WLOGOUT_CONFIG_DIR"/style.css
+cp "$CONFIGS_DIR/wlogout/layout" "$WLOGOUT_CONFIG_DIR"/layout
 
-# Tải xuống từng icon
-for icon in "${icons[@]}"; do
-    if [ ! -f "$HOME/.config/wlogout/icons/${icon}.svg" ]; then
-        echo "Đang tải xuống ${icon}.svg..."
-        curl -L -o "$HOME/.config/wlogout/icons/${icon}.svg" "${base_url}/${icon}.svg" || \
-            wget --no-check-certificate -P "$HOME/.config/wlogout/icons/" "${base_url}/${icon}.svg"
+# Tải xuống các file icon
+for icon in "${ICON_NAMES[@]}"; do
+    DOWNLOAD_URL="${ICON_BASE_URL}/${icon}.svg"
+    OUTPUT_FILE="$WLOGOUT_CONFIG_DIR/icons/${icon}.svg"
+
+    if ! _download_with_retry "$DOWNLOAD_URL" "$OUTPUT_FILE"; then
+        exit 1
     fi
 done
+
+# Tải xuống file css
+if ! _download_with_retry "$COLOR_URL" "$WLOGOUT_CONFIG_DIR/colors.css"; then
+    exit 1
+fi
