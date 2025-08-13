@@ -7,6 +7,9 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 CONFIGS_DIR="$SCRIPT_DIR/configs"
 
+# Source các biến môi trường
+source "$SCRIPT_DIR/.env"
+
 # Source các utility functions
 source "$SCRIPT_DIR/exec/utils/download.sh"
 

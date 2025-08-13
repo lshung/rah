@@ -1,5 +1,5 @@
 // Global colors //
-@theme "~/.config/rofi/colors/catppuccin-@@flavor@@.rasi"
+@theme "~/.config/rofi/colors/@@theme@@-@@flavor@@.rasi"
 
 * {
     theme-background:           @base;
