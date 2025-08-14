@@ -22,6 +22,7 @@ configuration {
     window-format:              "{w}{t}";
     font:                       "JetBrainsMono Nerd Font 10";
     icon-theme:                 "Tela-circle-dracula";
+    kb-cancel:                  "Escape,MousePrimary";
     kb-mode-next:               "Ctrl+Alt+Down,Ctrl+Alt+Right";
     kb-mode-previous:           "Ctrl+Alt+Up,Ctrl+Alt+Left";
 }

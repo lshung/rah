@@ -1,14 +1,15 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 40,
+    "height": 36,
     "font": {
         "family": "system-ui, sans-serif",
         "size": 11
     },
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "reload_style_on_change": true,
+    "modules-left": ["custom/arch-logo", "hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "battery", "tray", "custom/logout"],
+    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "network", "bluetooth", "battery", "custom/caffeine", "custom/logout"],
 
     // Hyprland-specific modules
     "hyprland/workspaces": {
@@ -32,9 +33,27 @@
     // System modules
     "clock": {
         "format": "\uf073 {:%Y-%m-%d \udb82\udd54 %H:%M:%S}",
-        "tooltip-format": "{:%A, %d %B %Y | %H:%M}",
         "interval": 1,
-        "swap-icon-label": false
+        "swap-icon-label": false,
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode"          : "year",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "format": {
+                "months":     "<span color='#eba0ac'><b>{}</b></span>",
+                "days":       "<span color='#cdd6f4'><b>{}</b></span>",
+                "weeks":      "<span color='#74c7ec'><b>W{}</b></span>",
+                "weekdays":   "<span color='#f9e2af'><b>{}</b></span>",
+                "today":      "<span color='#1e1e2e' bgcolor='#f9e2af'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
     },
 
     "cpu": {
@@ -46,14 +65,16 @@
     "memory": {
         "format": "\uefc5 {used:0.1f}GB/{total:0.1f}GB",
         "interval": 5,
-        "tooltip": false,
+        "tooltip-format": "RAM\nTotal: {total:0.1f}GB\nUsed: {used:0.1f}GB ({percentage}%)\nFree: {avail:0.1f}GB\n\nSwap\nTotal: {swapTotal:0.1f}GB\nUsed: {swapUsed:0.1f}GB ({swapPercentage}%)\nFree: {swapAvail:0.1f}GB",
         "swap-icon-label": false
     },
 
     "temperature": {
+        "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input",
         "critical-threshold": 80,
         "format": "\uf2c9 {temperatureC}°C",
         "format-critical": "\uef2a {temperatureC}°C",
+        "tooltip": false,
         "swap-icon-label": false
     },
 
@@ -72,39 +93,58 @@
     },
 
     "network": {
-        "format-wifi": "\udb81\udda9 {essid} ({signalStrength}%)",
-        "format-ethernet": "\udb80\ude00 {ifname} ({ipaddr})",
-        "format-disconnected": "\udb81\uddaa Disconnected",
+        "format-wifi": "{icon}",
+        "format-ethernet": "\udb80\udf18",
+        "format-disconnected": "\udb82\udd2d",
+        "tooltip-format-wifi": "Interface: {ifname}\nSSID: {essid}\nSignal: {signalStrength}%\nFrequency: {frequency}GHz\nIP: {ipaddr}/{cidr}\nMask: {netmask}\nGateway: {gwaddr}\nUp: {bandwidthUpBytes}\nDown: {bandwidthDownBytes}",
+        "tooltip-format-ethernet": "Interface: {ifname}\nIP: {ipaddr}/{cidr}\nMask: {netmask}\nGateway: {gwaddr}\nUp: {bandwidthUpBytes}\nDown: {bandwidthDownBytes}",
+        "tooltip-format-disconnected": "Disconnected",
+        "format-icons": [
+            "\udb82\udd2f", "\udb82\udd1f", "\udb82\udd22", "\udb82\udd25", "\udb82\udd28"
+        ],
+        "on-click": "nmcli device wifi rescan && kitty --class nmtui -e nmtui",
         "interval": 5,
         "swap-icon-label": false
     },
 
+    "bluetooth": {
+        "format": "\uf293",
+        "tooltip-format": "Status: {status}\nAlias: {controller_alias}\nAddress: {controller_address}\nDevices: {num_connections}",
+        "tooltip-format-connected": "Status: {status}\nAlias: {controller_alias}\nAddress: {controller_address}\nDevices: {num_connections}\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias} | {device_address}",
+        "on-click": "blueman-manager",
+        "interval": 10
+    },
+
     "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%",
-        "format-muted": "\udb81\udf5f Muted",
-        "format-icons": {
-            "headphone": "\uf025",
-            "hands-free": "\uee59",
-            "headset": "\udb80\udece",
-            "phone": "\uf095",
-            "portable": "\uf095",
-            "car": "\uf1b9",
-            "default": ["\ue638", "\udb81\udf1f"]
-        },
+        "format": "\uf028 {volume}%",
+        "format-muted": "\ueee8",
+        "tooltip": false,
         "swap-icon-label": false,
         "scroll-step": 5,
         "on-click": "pavucontrol"
     },
 
-    "tray": {
-        "spacing": 10,
-        "swap-icon-label": false
+    "custom/caffeine": {
+        "format": "{text}",
+        "tooltip": false,
+        "exec": "sleep 0.1 && pgrep -x caffeine >/dev/null && echo '{\"text\": \"\udb80\udd76\", \"class\": \"on\"}' || echo '{\"text\": \"\udb83\udfaa\", \"class\": \"off\"}'",
+        "exec-on-event": true,
+        "return-type": "json",
+        "on-click": "pgrep -x caffeine >/dev/null && pkill -x caffeine || caffeine &",
+        "interval": 60
     },
 
     "custom/logout": {
         "format": "\uf011",
         "on-click": "wlogout --protocol layer-shell",
+        "tooltip": false,
+        "interval": "once"
+    },
+
+    "custom/arch-logo": {
+        "format": "\uf303",
+        "on-click": "rofi -show drun",
         "tooltip": false,
         "interval": "once"
     }
