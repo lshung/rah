@@ -20,8 +20,8 @@ rm -rf "$KITTY_CONFIG_DIR"/*
 mkdir -p "$KITTY_CONFIG_DIR"/colors
 
 # Sao chép template cấu hình Kitty
-cp "$CONFIGS_DIR/kitty/kitty.conf" "$KITTY_CONFIG_DIR"/kitty.conf
-cp "$CONFIGS_DIR/kitty/colors/$THEME_NAME-$THEME_FLAVOR.conf" "$KITTY_CONFIG_DIR"/colors/
+cp "$APP_CONFIGS_KITTY_DIR/kitty.conf" "$KITTY_CONFIG_DIR"/kitty.conf
+cp "$APP_CONFIGS_KITTY_DIR/colors/$THEME_NAME-$THEME_FLAVOR.conf" "$KITTY_CONFIG_DIR"/colors/
 
 # Chỉnh sửa cấu hình Kitty theo theme và flavor
 sed -i "s/@@theme@@/$THEME_NAME/g" "$KITTY_CONFIG_DIR"/kitty.conf

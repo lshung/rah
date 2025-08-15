@@ -20,9 +20,9 @@ rm -rf "$WAYBAR_CONFIG_DIR"/*
 mkdir -p "$WAYBAR_CONFIG_DIR"/colors
 
 # Sao chép template cấu hình Waybar
-cp "$CONFIGS_DIR/waybar/config.jsonc" "$WAYBAR_CONFIG_DIR"/config.jsonc
-cp "$CONFIGS_DIR/waybar/style.css" "$WAYBAR_CONFIG_DIR"/style.css
-cp "$CONFIGS_DIR/waybar/colors/$THEME_NAME-$THEME_FLAVOR.css" "$WAYBAR_CONFIG_DIR"/colors/
+cp "$APP_CONFIGS_WAYBAR_DIR/config.jsonc" "$WAYBAR_CONFIG_DIR"/config.jsonc
+cp "$APP_CONFIGS_WAYBAR_DIR/style.css" "$WAYBAR_CONFIG_DIR"/style.css
+cp "$APP_CONFIGS_WAYBAR_DIR/colors/$THEME_NAME-$THEME_FLAVOR.css" "$WAYBAR_CONFIG_DIR"/colors/
 
 # Chỉnh sửa cấu hình Waybar theo theme, flavor và accent
 sed -i "s/@@theme@@/$THEME_NAME/g" "$WAYBAR_CONFIG_DIR"/style.css

@@ -20,7 +20,7 @@ mkdir -p "$HYPR_CONFIG_DIR"
 rm -rf "$HYPR_CONFIG_DIR"/*
 
 # Sao chép template cấu hình Hyprland
-cp -r "$CONFIGS_DIR"/hypr/* "$HYPR_CONFIG_DIR"/
+cp -r "$APP_CONFIGS_HYPR_DIR"/* "$HYPR_CONFIG_DIR"/
 
 # Chỉnh sửa cấu hình hyprlock theo theme, flavor và accent
 sed -i "s/@@theme@@/$THEME_NAME/g" "$HYPRLOCK_CONFIG_FILE"

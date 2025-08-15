@@ -23,8 +23,8 @@ rm -rf "$WLOGOUT_CONFIG_DIR"/*
 mkdir -p "$WLOGOUT_CONFIG_DIR"/icons
 
 # Sao chép template cấu hình Wlogout
-cp "$CONFIGS_DIR/wlogout/style.css" "$WLOGOUT_CONFIG_DIR"/style.css
-cp "$CONFIGS_DIR/wlogout/layout" "$WLOGOUT_CONFIG_DIR"/layout
+cp "$APP_CONFIGS_WLOGOUT_DIR/style.css" "$WLOGOUT_CONFIG_DIR"/style.css
+cp "$APP_CONFIGS_WLOGOUT_DIR/layout" "$WLOGOUT_CONFIG_DIR"/layout
 
 # Tải xuống các file icon
 for icon in "${ICON_NAMES[@]}"; do

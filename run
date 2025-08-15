@@ -3,98 +3,49 @@
 # Thoát nếu có lỗi
 set -e
 
-# Khai báo biến
-SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
-CONFIGS_DIR="$SCRIPT_DIR/configs"
+# Lấy đường dẫn của app
+APP_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+export APP_DIR
 
 # Source các biến môi trường
-source "$SCRIPT_DIR/.env"
+source "$APP_DIR/env/app"
+source "$APP_ENV_DIR/theme"
 
 # Source các utility functions
-source "$SCRIPT_DIR/exec/utils/download.sh"
+source "$APP_SETUP_UTILS_DIR/download.sh"
 
-# Hàm để source một module cụ thể
-source_module() {
-    local module_name="$1"
-    local module_file="$SCRIPT_DIR/exec/modules/${module_name}.sh"
-
-    if [[ -f "$module_file" ]]; then
-        source "$module_file"
-    else
-        echo "Lỗi: Không tìm thấy module '$module_name' tại $module_file"
-        exit 1
-    fi
-}
+# Tạo symlink
+ln -sf "$APP_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"
 
 # Hàm để hiển thị hướng dẫn sử dụng
 show_usage() {
-    echo "Cách sử dụng: $0 [TÙY_CHỌN]"
+    echo "Cách sử dụng: $APP_NAME_LOWER [TÙY_CHỌN]"
     echo ""
     echo "Các tùy chọn:"
-    echo "  --help, -h      Hiển thị hướng dẫn"
-    echo "  --fonts         Cập nhật module fonts"
-    echo "  --hyprland      Cập nhật module hyprland"
-    echo "  --icon-themes   Cập nhật module icon-themes"
-    echo "  --kitty         Cập nhật module kitty"
-    echo "  --kvantum       Cập nhật module kvantum"
-    echo "  --nwg-look      Cập nhật module nwg-look"
-    echo "  --qtct          Cập nhật module qtct"
-    echo "  --rofi          Cập nhật module rofi"
-    echo "  --waybar        Cập nhật module waybar"
-    echo "  --wlogout       Cập nhật module wlogout"
-    echo ""
-    echo "Nếu không có tùy chọn nào được cung cấp, cập nhật tất cả các modules."
+    echo "  --help, -h          Hiển thị hướng dẫn"
+    echo "  --install, -i       Cài đặt packages và cấu hình"
+    echo "  --update, -u        Cập nhật cấu hình nào đó hoặc tất cả"
+    echo "  --exec, -x          Thực thi script"
 }
 
 # Xử lý các tham số dòng lệnh
 if [[ $# -eq 0 ]]; then
-    # Không có tham số, source tất cả các modules
-    source "$SCRIPT_DIR/exec/modules/fonts.sh"
-    source "$SCRIPT_DIR/exec/modules/icon-themes.sh"
-    source "$SCRIPT_DIR/exec/modules/kitty.sh"
-    source "$SCRIPT_DIR/exec/modules/wlogout.sh"
-    source "$SCRIPT_DIR/exec/modules/nwg-look.sh"
-    source "$SCRIPT_DIR/exec/modules/qtct.sh"
-    source "$SCRIPT_DIR/exec/modules/rofi.sh"
-    source "$SCRIPT_DIR/exec/modules/kvantum.sh"
-    source "$SCRIPT_DIR/exec/modules/hyprland.sh"
-    source "$SCRIPT_DIR/exec/modules/waybar.sh"
-    echo "Cập nhật cấu hình thành công! Hãy logout để áp dụng các thay đổi."
+    show_usage
+    exit 0
 else
     case "$1" in
         --help|-h)
             show_usage
             exit 0
             ;;
-        --fonts)
-            source_module "fonts"
+        --install|-i)
+            source "$APP_SETUP_DIR/install.sh" "$@"
             ;;
-        --hyprland)
-            source_module "hyprland"
+        --update|-u)
+            source "$APP_SETUP_DIR/update.sh" "$@"
             ;;
-        --icon-themes)
-            source_module "icon-themes"
-            ;;
-        --kitty)
-            source_module "kitty"
-            ;;
-        --kvantum)
-            source_module "kvantum"
-            ;;
-        --nwg-look)
-            source_module "nwg-look"
-            ;;
-        --qtct)
-            source_module "qtct"
-            ;;
-        --rofi)
-            source_module "rofi"
-            ;;
-        --waybar)
-            source_module "waybar"
-            ;;
-        --wlogout)
-            source_module "wlogout"
+        --exec|-x)
+            source "$APP_SCRIPTS_DIR/exec.sh" "$@"
             ;;
         *)
             echo "Lỗi: Tuỳ chọn không hợp lệ '$1'"
