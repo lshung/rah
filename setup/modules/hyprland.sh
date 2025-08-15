@@ -1,28 +1,28 @@
 #!/bin/bash
 
-# Kiểm tra xem script có được source hay không
+# Check if script is being sourced
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo "Lỗi: Script này chỉ được phép source, không được phép chạy trực tiếp."
+    echo "Error: This script can only be sourced, not run directly."
     exit 1
 fi
 
-# Thoát nếu có lỗi
+# Exit on error
 set -e
 
-echo "Cập nhật cấu hình Hyprland..."
+echo "Updating Hyprland configuration..."
 
-# Khai báo biến
+# Declare variables
 HYPR_CONFIG_DIR="$HOME"/.config/hypr
 HYPRLOCK_CONFIG_FILE="$HYPR_CONFIG_DIR"/hyprlock.conf
 
-# Dọn dẹp thư mục config của Hyprland
+# Clean up Hyprland config directory
 mkdir -p "$HYPR_CONFIG_DIR"
 rm -rf "$HYPR_CONFIG_DIR"/*
 
-# Sao chép template cấu hình Hyprland
+# Copy Hyprland configuration template
 cp -r "$APP_CONFIGS_HYPR_DIR"/* "$HYPR_CONFIG_DIR"/
 
-# Chỉnh sửa cấu hình hyprlock theo theme, flavor và accent
+# Edit hyprlock configuration according to theme, flavor and accent
 sed -i "s/@@theme@@/$THEME_NAME/g" "$HYPRLOCK_CONFIG_FILE"
 sed -i "s/@@flavor@@/$THEME_FLAVOR/g" "$HYPRLOCK_CONFIG_FILE"
 sed -i "s/@@accent@@/$THEME_ACCENT/g" "$HYPRLOCK_CONFIG_FILE"

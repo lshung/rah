@@ -1,34 +1,34 @@
 #!/bin/bash
 
-# Thoát nếu có lỗi
+# Exit on error
 set -e
 
-# Lấy đường dẫn của app
+# Get app path
 APP_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export APP_DIR
 
-# Source các biến môi trường
+# Source environment variables
 source "$APP_DIR/env/app"
 source "$APP_ENV_DIR/theme"
 
-# Source các utility functions
+# Source utility functions
 source "$APP_SETUP_UTILS_DIR/download.sh"
 
-# Tạo symlink
+# Create symlink
 ln -sf "$APP_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"
 
-# Hàm để hiển thị hướng dẫn sử dụng
+# Function to show usage
 show_usage() {
-    echo "Cách sử dụng: $APP_NAME_LOWER [TÙY_CHỌN]"
+    echo "Usage: $APP_NAME_LOWER [OPTIONS]"
     echo ""
-    echo "Các tùy chọn:"
-    echo "  --help, -h          Hiển thị hướng dẫn"
-    echo "  --install, -i       Cài đặt packages và cấu hình"
-    echo "  --update, -u        Cập nhật cấu hình nào đó hoặc tất cả"
-    echo "  --exec, -x          Thực thi script"
+    echo "Options:"
+    echo "  --help, -h          Show help"
+    echo "  --install, -i       Install packages and configuration"
+    echo "  --update, -u        Update specific configuration or all"
+    echo "  --exec, -x          Execute script"
 }
 
-# Xử lý các tham số dòng lệnh
+# Process command line arguments
 if [[ $# -eq 0 ]]; then
     show_usage
     exit 0
@@ -48,7 +48,7 @@ else
             source "$APP_SCRIPTS_DIR/exec.sh" "$@"
             ;;
         *)
-            echo "Lỗi: Tuỳ chọn không hợp lệ '$1'"
+            echo "Error: Invalid option '$1'"
             show_usage
             exit 1
             ;;

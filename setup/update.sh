@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Kiểm tra xem script có được source hay không
+# Check if script is being sourced
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo "Lỗi: Script này chỉ được phép source, không được phép chạy trực tiếp."
+    echo "Error: This script can only be sourced, not run directly."
     exit 1
 fi
 
-# Thoát nếu có lỗi
+# Exit on error
 set -e
 
-# Hàm để source một module cụ thể
+# Function to source a specific module
 source_module() {
     local module_name="$1"
     local module_file="$APP_SETUP_MODULES_DIR/${module_name}.sh"
@@ -17,39 +17,39 @@ source_module() {
     if [[ -f "$module_file" ]]; then
         source "$module_file"
     else
-        echo "Lỗi: Không tìm thấy module '$module_name' tại $module_file"
+        echo "Error: Module '$module_name' not found at $module_file"
         exit 1
     fi
 }
 
-# Hàm để hiển thị hướng dẫn sử dụng
+# Function to show usage
 show_usage() {
-    echo "Cách sử dụng: $APP_NAME_LOWER $ACTION [TÙY_CHỌN]"
+    echo "Usage: $APP_NAME_LOWER $ACTION [OPTIONS]"
     echo ""
-    echo "Các tùy chọn:"
-    echo "  --help, -h      Hiển thị hướng dẫn"
-    echo "  fonts           Cập nhật module fonts"
-    echo "  hyprland        Cập nhật module hyprland"
-    echo "  icon-themes     Cập nhật module icon-themes"
-    echo "  kitty           Cập nhật module kitty"
-    echo "  kvantum         Cập nhật module kvantum"
-    echo "  nwg-look        Cập nhật module nwg-look"
-    echo "  qtct            Cập nhật module qtct"
-    echo "  rofi            Cập nhật module rofi"
-    echo "  waybar          Cập nhật module waybar"
-    echo "  wlogout         Cập nhật module wlogout"
+    echo "Options:"
+    echo "  --help, -h      Show help"
+    echo "  fonts           Update fonts module"
+    echo "  hyprland        Update hyprland module"
+    echo "  icon-themes     Update icon-themes module"
+    echo "  kitty           Update kitty module"
+    echo "  kvantum         Update kvantum module"
+    echo "  nwg-look        Update nwg-look module"
+    echo "  qtct            Update qtct module"
+    echo "  rofi            Update rofi module"
+    echo "  waybar          Update waybar module"
+    echo "  wlogout         Update wlogout module"
     echo ""
-    echo "Nếu không có tùy chọn nào được cung cấp, cập nhật tất cả các modules."
+    echo "If no options are provided, all modules will be updated."
 }
 
-# Lấy option đầu tiên (--update hoặc -u)
+# Get first option (--update or -u)
 ACTION="$1"
-# Shift 1 lần để loại bỏ option đầu tiên
+# Shift once to remove first option
 shift
 
-# Xử lý các tham số dòng lệnh
+# Process command line arguments
 if [[ $# -eq 0 ]]; then
-    # Không có tham số, source tất cả các modules
+    # No arguments, source all modules
     source_module "fonts"
     source_module "icon-themes"
     source_module "kitty"
@@ -60,7 +60,7 @@ if [[ $# -eq 0 ]]; then
     source_module "kvantum"
     source_module "hyprland"
     source_module "waybar"
-    echo "Cập nhật cấu hình thành công! Hãy logout để áp dụng các thay đổi."
+    echo "Configuration updated successfully! Please logout to apply changes."
 else
     case "$1" in
         --help|-h)
@@ -98,7 +98,7 @@ else
             source_module "wlogout"
             ;;
         *)
-            echo "Lỗi: Tuỳ chọn không hợp lệ '$1'"
+            echo "Error: Invalid option '$1'"
             show_usage "$@"
             exit 1
             ;;

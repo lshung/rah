@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Kiểm tra xem script có được source hay không
+# Check if script is being sourced
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo "Lỗi: Script này chỉ được phép source, không được phép chạy trực tiếp."
+    echo "Error: This script can only be sourced, not run directly."
     exit 1
 fi
 
-# Thoát nếu có lỗi
+# Exit on error
 set -e
 
-echo "Cài đặt icon themes..."
+echo "Installing icon themes..."
 
-# Cài đặt Tela-circle-icon-theme
+# Install Tela-circle-icon-theme
 if ! pacman -Q tela-circle-icon-theme-all > /dev/null 2>&1; then
-    echo "Cài đặt Tela Circle Icon Theme..."
+    echo "Installing Tela Circle Icon Theme..."
     sudo pacman -S --noconfirm tela-circle-icon-theme-all
 fi

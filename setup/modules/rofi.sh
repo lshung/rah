@@ -1,29 +1,29 @@
 #!/bin/bash
 
-# Kiểm tra xem script có được source hay không
+# Check if script is being sourced
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo "Lỗi: Script này chỉ được phép source, không được phép chạy trực tiếp."
+    echo "Error: This script can only be sourced, not run directly."
     exit 1
 fi
 
-# Thoát nếu có lỗi
+# Exit on error
 set -e
 
-echo "Cập nhật cấu hình Rofi..."
+echo "Updating Rofi configuration..."
 
-# Khai báo biến
+# Declare variables
 ROFI_CONFIG_DIR="$HOME"/.config/rofi
 
-# Dọn dẹp thư mục config của Rofi
+# Clean up Rofi config directory
 mkdir -p "$ROFI_CONFIG_DIR"
 rm -rf "$ROFI_CONFIG_DIR"/*
 mkdir -p "$ROFI_CONFIG_DIR"/colors
 
-# Sao chép template cấu hình Rofi
+# Copy Rofi configuration template
 cp "$APP_CONFIGS_ROFI_DIR/styles/$ROFI_STYLE.rasi" "$ROFI_CONFIG_DIR"/config.rasi
 cp "$APP_CONFIGS_ROFI_DIR/colors/$THEME_NAME-$THEME_FLAVOR.rasi" "$ROFI_CONFIG_DIR"/colors/
 
-# Chỉnh sửa cấu hình Rofi theo theme, flavor và accent
+# Edit Rofi configuration according to theme, flavor and accent
 sed -i "s/@@theme@@/$THEME_NAME/g" "$ROFI_CONFIG_DIR"/config.rasi
 sed -i "s/@@flavor@@/$THEME_FLAVOR/g" "$ROFI_CONFIG_DIR"/config.rasi
 sed -i "s/@@accent@@/$THEME_ACCENT/g" "$ROFI_CONFIG_DIR"/config.rasi

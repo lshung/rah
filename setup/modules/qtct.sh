@@ -1,20 +1,20 @@
 #!/bin/bash
 
-# Kiểm tra xem script có được source hay không
+# Check if script is being sourced
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo "Lỗi: Script này chỉ được phép source, không được phép chạy trực tiếp."
+    echo "Error: This script can only be sourced, not run directly."
     exit 1
 fi
 
-# Thoát nếu có lỗi
+# Exit on error
 set -e
 
-echo "Cập nhật cấu hình Qt5ct..."
+echo "Updating Qt5ct configuration..."
 mkdir -p "$HOME"/.config/qt5ct
 rm -rf "$HOME"/.config/qt5ct/*
 cp -r "$APP_CONFIGS_QT5CT_DIR"/* "$HOME"/.config/qt5ct/
 
-echo "Cập nhật cấu hình Qt6ct..."
+echo "Updating Qt6ct configuration..."
 mkdir -p "$HOME"/.config/qt6ct
 rm -rf "$HOME"/.config/qt6ct/*
 cp -r "$APP_CONFIGS_QT6CT_DIR"/* "$HOME"/.config/qt6ct/
