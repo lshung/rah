@@ -136,7 +136,8 @@ window#waybar.empty #window {
 #pulseaudio.muted:hover,
 #network.disconnected:hover,
 #battery.critical:hover,
-#battery.warning:hover {
+#battery.warning:hover,
+#custom-caffeine.off:hover {
     background: @accent;
     color: @base;
 }

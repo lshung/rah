@@ -1,4 +1,4 @@
-// Global colors //
+/*****----- Global colors -----*****/
 @theme "~/.config/rofi/colors/@@theme@@-@@flavor@@.rasi"
 
 * {
@@ -9,8 +9,7 @@
     border-color:               transparent;
 }
 
-
-// Config //
+/*****----- Config -----*****/
 configuration {
     modi:                       "drun,filebrowser,window,run";
     show-icons:                 true;
@@ -27,8 +26,7 @@ configuration {
     kb-mode-previous:           "Ctrl+Alt+Up,Ctrl+Alt+Left";
 }
 
-
-// Main //
+/*****----- Main window -----*****/
 window {
     width:                      48em;
     transparency:               "real";
@@ -42,6 +40,8 @@ window {
     border-radius:              10px;
     background-color:           @theme-background;
 }
+
+/*****----- Main box -----*****/
 mainbox {
     enabled:                    true;
     spacing:                    0em;
@@ -49,11 +49,10 @@ mainbox {
     orientation:                vertical;
     children:                   [ "inputbar" , "listbox" ];
     background-color:           transparent;
-    background-image:           url("~/.config/wallpapers/rain_world_2.png", width);
+    background-image:           url("~/.cache/wallpapers/wallpaper.blur", width);
 }
 
-
-// Inputs //
+/*****----- Input bar -----*****/
 inputbar {
     enabled:                    true;
     spacing:                    0em;
@@ -74,8 +73,7 @@ entry {
     horizontal-align:           0.5;
 }
 
-
-// Lists //
+/*****----- List view -----*****/
 listbox {
     padding:                    0em;
     spacing:                    0em;
@@ -93,6 +91,7 @@ listview {
     dynamic:                    true;
     scrollbar:                  false;
     layout:                     vertical;
+    flow:                       horizontal;
     reverse:                    false;
     fixed-height:               true;
     fixed-columns:              true;
@@ -101,8 +100,7 @@ listview {
     text-color:                 @theme-text;
 }
 
-
-// Modes //
+/*****----- Mode switcher -----*****/
 mode-switcher {
     orientation:                vertical;
     enabled:                    true;
@@ -125,8 +123,7 @@ button selected {
     text-color:                 @theme-background;
 }
 
-
-// Elements //
+/*****----- Elements -----*****/
 element {
     enabled:                    true;
     spacing:                    0em;
@@ -155,14 +152,13 @@ element-text {
     padding:                    0.5em;
 }
 
-// Error message //
+/*****----- Message -----*****/
 error-message {
     text-color:                 @theme-text;
     background-color:           @theme-background;
     text-transform:             capitalize;
     children:                   [ "textbox" ];
 }
-
 textbox {
     text-color:                 inherit;
     background-color:           inherit;
