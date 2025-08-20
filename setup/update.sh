@@ -64,7 +64,7 @@ if [[ $# -eq 0 ]]; then
 else
     case "$1" in
         --help|-h)
-            show_usage "$@"
+            show_usage
             exit 0
             ;;
         fonts)
@@ -99,7 +99,7 @@ else
             ;;
         *)
             echo "Error: Invalid option '$1'"
-            show_usage "$@"
+            show_usage
             exit 1
             ;;
     esac

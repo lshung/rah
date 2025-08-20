@@ -144,7 +144,7 @@
 
     "custom/arch-logo": {
         "format": "\uf303",
-        "on-click": "rofi -show drun",
+        "on-click": "rah -x rofi-launcher -s style-launchpad",
         "tooltip": false,
         "interval": "once"
     }
