@@ -14,11 +14,12 @@ show_usage() {
     echo "Usage: $APP_NAME_LOWER $ACTION [SUBCOMMAND] [ARGS]"
     echo ""
     echo "Options:"
-    echo "  --help, -h          Show help"
+    echo "  --help, -h              Show help"
     echo ""
     echo "Subcommands:"
-    echo "  rofi-launcher       Launch rofi"
-    echo "  wallpaper           Change wallpaper"
+    echo "  rofi-launcher           Launch rofi"
+    echo "  wallpaper               Change wallpaper"
+    echo "  wallpaper-selection     Select wallpaper from rofi menu"
 }
 
 # Get first option (--exec or -x)
@@ -43,6 +44,10 @@ else
         wallpaper)
             shift
             source "$APP_SCRIPTS_DIR/wallpaper.sh" "$@"
+            ;;
+        wallpaper-selection)
+            shift
+            source "$APP_SCRIPTS_DIR/wallpaper-selection.sh" "$@"
             ;;
         *)
             echo "Error: Invalid subcommand '$1'"

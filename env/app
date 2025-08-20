@@ -29,3 +29,4 @@ APP_SETUP_UTILS_DIR="$APP_SETUP_DIR"/utils
 # Wallpapers dir
 WALLPAPERS_DIR="$HOME/.config/wallpapers"
 CACHE_WALLPAPERS_DIR="$HOME/.cache/wallpapers"
+CACHE_WALLPAPERS_THUMBNAILS_DIR="$HOME/.cache/wallpapers/thumbnails"

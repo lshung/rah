@@ -42,7 +42,7 @@ parse_arguments() {
         case "$1" in
             --help|-h)
                 show_usage
-                return 0
+                exit 0
                 ;;
             --preload)
                 PRELOAD="yes"
@@ -50,13 +50,13 @@ parse_arguments() {
             -f|--file)
                 current_arg="$1"
                 shift
-                [[ -z "$1" ]] && { echo "Error: Option $current_arg requires a file path"; show_usage; return 1; }
+                [[ -z "$1" ]] && { echo "Error: Option $current_arg requires a file path"; show_usage; exit 1; }
                 WALLPAPER_FILE="$1"
                 ;;
             *)
                 echo "Error: Invalid option '$1'"
                 show_usage
-                return 1
+                exit 1
                 ;;
         esac
         shift
