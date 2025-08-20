@@ -25,3 +25,7 @@ APP_SCRIPTS_DIR="$APP_DIR"/scripts
 APP_SETUP_DIR="$APP_DIR"/setup
 APP_SETUP_MODULES_DIR="$APP_SETUP_DIR"/modules
 APP_SETUP_UTILS_DIR="$APP_SETUP_DIR"/utils
+
+# Wallpapers dir
+WALLPAPERS_DIR="$HOME/.config/wallpapers"
+CACHE_WALLPAPERS_DIR="$HOME/.cache/wallpapers"

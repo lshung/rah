@@ -18,6 +18,7 @@ show_usage() {
     echo ""
     echo "Subcommands:"
     echo "  rofi-launcher       Launch rofi"
+    echo "  wallpaper           Change wallpaper"
 }
 
 # Get first option (--exec or -x)
@@ -37,9 +38,11 @@ else
             ;;
         rofi-launcher)
             shift
-            # Source and forward remaining arguments
-            # shellcheck disable=SC1090
             source "$APP_SCRIPTS_DIR/rofi-launcher.sh" "$@"
+            ;;
+        wallpaper)
+            shift
+            source "$APP_SCRIPTS_DIR/wallpaper.sh" "$@"
             ;;
         *)
             echo "Error: Invalid subcommand '$1'"
