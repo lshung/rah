@@ -28,11 +28,11 @@ rm -rf "$THEME_DIR"
 mkdir -p "$THEME_DIR"
 
 # Tải về file svg và kvconfig
-if ! _download_with_retry "$SVG_FILE_URL" "$THEME_DIR/$SVG_FILE_NAME"; then
+if ! download_with_retry "$SVG_FILE_URL" "$THEME_DIR/$SVG_FILE_NAME"; then
     exit 1
 fi
 
-if ! _download_with_retry "$KVCONFIG_FILE_URL" "$THEME_DIR/$KVCONFIG_FILE_NAME"; then
+if ! download_with_retry "$KVCONFIG_FILE_URL" "$THEME_DIR/$KVCONFIG_FILE_NAME"; then
     exit 1
 fi
 

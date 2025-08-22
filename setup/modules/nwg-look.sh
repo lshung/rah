@@ -28,7 +28,7 @@ mkdir -p "$THEMES_DIR"
 rm -rf "$THEMES_DIR/${THEME_FULL_NAME}"*
 
 # Download Catppuccin theme
-if _download_with_retry "$DOWNLOAD_URL" "$OUTPUT_FILE"; then
+if download_with_retry "$DOWNLOAD_URL" "$OUTPUT_FILE"; then
     # Unzip and remove zip file
     unzip -q "$OUTPUT_FILE" -d "$THEMES_DIR"
     rm -f "$OUTPUT_FILE"

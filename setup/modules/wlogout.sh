@@ -31,12 +31,12 @@ for icon in "${ICON_NAMES[@]}"; do
     DOWNLOAD_URL="${ICON_BASE_URL}/${icon}.svg"
     OUTPUT_FILE="$WLOGOUT_CONFIG_DIR/icons/${icon}.svg"
 
-    if ! _download_with_retry "$DOWNLOAD_URL" "$OUTPUT_FILE"; then
+    if ! download_with_retry "$DOWNLOAD_URL" "$OUTPUT_FILE"; then
         exit 1
     fi
 done
 
 # Download css
-if ! _download_with_retry "$COLOR_URL" "$WLOGOUT_CONFIG_DIR/colors.css"; then
+if ! download_with_retry "$COLOR_URL" "$WLOGOUT_CONFIG_DIR/colors.css"; then
     exit 1
 fi

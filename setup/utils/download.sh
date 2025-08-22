@@ -10,7 +10,7 @@ fi
 set -e
 
 # Download function with retry and timeout
-_download_with_retry() {
+download_with_retry() {
     local url="$1"
     local output="$2"
     local max_retries=3

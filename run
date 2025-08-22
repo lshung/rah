@@ -13,6 +13,7 @@ source "$APP_ENV_DIR/theme"
 
 # Source utility functions
 source "$APP_SETUP_UTILS_DIR/download.sh"
+source "$APP_SETUP_UTILS_DIR/sync-contents.sh"
 
 # Create symlink
 ln -sf "$APP_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"

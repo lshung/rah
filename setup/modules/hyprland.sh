@@ -15,12 +15,9 @@ echo "Updating Hyprland configuration..."
 HYPR_CONFIG_DIR="$HOME"/.config/hypr
 HYPRLOCK_CONFIG_FILE="$HYPR_CONFIG_DIR"/hyprlock.conf
 
-# Clean up Hyprland config directory
+# Sync Hyprland configuration
 mkdir -p "$HYPR_CONFIG_DIR"
-rm -rf "$HYPR_CONFIG_DIR"/*
-
-# Copy Hyprland configuration template
-cp -r "$APP_CONFIGS_HYPR_DIR"/* "$HYPR_CONFIG_DIR"/
+sync_contents_of_two_dirs "$APP_CONFIGS_HYPR_DIR" "$HYPR_CONFIG_DIR"
 
 # Edit hyprlock configuration according to theme, flavor and accent
 sed -i "s/@@theme@@/$THEME_NAME/g" "$HYPRLOCK_CONFIG_FILE"
