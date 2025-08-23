@@ -3,5 +3,8 @@ THEME_NAME="catppuccin"
 THEME_FLAVOR="mocha"
 THEME_ACCENT="peach"
 
+# HYPRLAND
+HYPRLAND_ANIMATIONS_STYLE="rah"
+
 # ROFI
 ROFI_STYLE="style-1"
