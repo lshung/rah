@@ -14,6 +14,14 @@ echo "Updating Hyprland configuration..."
 # Declare variables
 HYPR_CONFIG_DIR="$HOME"/.config/hypr
 HYPRLOCK_CONFIG_FILE="$HYPR_CONFIG_DIR"/hyprlock.conf
+# Declare variable COLOR_ACCENT2
+if [ -n "$HYPRLAND_COLOR_ACCENT2" ]; then
+    COLOR_ACCENT2="$HYPRLAND_COLOR_ACCENT2"
+elif [ -n "$THEME_ACCENT2" ]; then
+    COLOR_ACCENT2="$THEME_ACCENT2"
+else
+    COLOR_ACCENT2=$(get_accent2_color "$THEME_ACCENT")
+fi
 
 # Sync Hyprland configuration
 mkdir -p "$HYPR_CONFIG_DIR"
@@ -22,6 +30,10 @@ sync_contents_of_two_dirs "$APP_CONFIGS_HYPR_DIR" "$HYPR_CONFIG_DIR"
 echo "Editing Hyprland variables configuration..."
 sed -i "s/^\$COLOR_THEME = .*$/\$COLOR_THEME = ${THEME_NAME}-${THEME_FLAVOR}/g" "$HYPR_CONFIG_DIR"/hyprland/variables.conf
 sed -i "s/^\$ANIMATIONS_STYLE = .*$/\$ANIMATIONS_STYLE = ${HYPRLAND_ANIMATIONS_STYLE}/g" "$HYPR_CONFIG_DIR"/hyprland/variables.conf
+sed -i "s/^\$COLOR_ACCENT = .*$/\$COLOR_ACCENT = \$${THEME_ACCENT}/g" "$HYPR_CONFIG_DIR"/hyprland/variables.conf
+sed -i "s/^\$COLOR_ACCENT_ALPHA = .*$/\$COLOR_ACCENT_ALPHA = \$${THEME_ACCENT}Alpha/g" "$HYPR_CONFIG_DIR"/hyprland/variables.conf
+sed -i "s/^\$COLOR_ACCENT2 = .*$/\$COLOR_ACCENT2 = \$${COLOR_ACCENT2}/g" "$HYPR_CONFIG_DIR"/hyprland/variables.conf
+sed -i "s/^\$COLOR_ACCENT2_ALPHA = .*$/\$COLOR_ACCENT2_ALPHA = \$${COLOR_ACCENT2}Alpha/g" "$HYPR_CONFIG_DIR"/hyprland/variables.conf
 
 # Edit hyprlock configuration according to theme, flavor and accent
 echo "Editing hyprlock configuration..."

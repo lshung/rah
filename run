@@ -5,15 +5,19 @@ set -e
 
 # Get app path
 APP_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
-export APP_DIR
 
 # Source environment variables
-source "$APP_DIR/env/app"
-source "$APP_ENV_DIR/theme"
+source "$APP_DIR/env"
+
+# Source app config
+if [ -f "$APP_CONFIG_FILE" ]; then
+    source "$APP_CONFIG_FILE"
+fi
 
 # Source utility functions
 source "$APP_SETUP_UTILS_DIR/download.sh"
 source "$APP_SETUP_UTILS_DIR/sync-contents.sh"
+source "$APP_SETUP_UTILS_DIR/get-color-accent2.sh"
 
 # Create symlink
 ln -sf "$APP_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"
