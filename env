@@ -36,6 +36,11 @@ WALLPAPERS_DIR="$HOME/.config/wallpapers"
 CACHE_WALLPAPERS_DIR="$HOME/.cache/wallpapers"
 CACHE_WALLPAPERS_THUMBNAILS_DIR="$HOME/.cache/wallpapers/thumbnails"
 
+# Configs directories
+CONFIG_DIR="$HOME/.config"
+WAYBAR_CONFIG_DIR="$CONFIG_DIR/waybar"
+WLOGOUT_CONFIG_DIR="$CONFIG_DIR/wlogout"
+
 
 ####################################################################
 # THEME                                                            #
@@ -53,3 +58,6 @@ HYPRLAND_COLOR_ACCENT2=""
 
 # Rofi
 ROFI_STYLE="style-1"
+
+# Wlogout
+WLOGOUT_STYLE="style-1"

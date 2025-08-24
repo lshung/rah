@@ -20,6 +20,7 @@ show_usage() {
     echo "  rofi-launcher           Launch rofi"
     echo "  wallpaper               Change wallpaper"
     echo "  wallpaper-selection     Select wallpaper from rofi menu"
+    echo "  wlogout                 Launch wlogout"
 }
 
 # Get first option (--exec or -x)
@@ -48,6 +49,10 @@ else
         wallpaper-selection)
             shift
             source "$APP_SCRIPTS_DIR/wallpaper-selection.sh" "$@"
+            ;;
+        wlogout)
+            shift
+            source "$APP_SCRIPTS_DIR/wlogout.sh" "$@"
             ;;
         *)
             echo "Error: Invalid subcommand '$1'"

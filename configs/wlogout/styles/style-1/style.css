@@ -1,0 +1,81 @@
+@import "${WAYBAR_CONFIG_DIR}/colors/${THEME_NAME}-${THEME_FLAVOR}.css";
+
+* {
+    background-image: none;
+    box-shadow: none;
+    font-size: ${WLOGOUT_FONT_SIZE}px;
+}
+
+window {
+    background-image: url("${CACHE_WALLPAPERS_DIR}/blur.jpg");
+}
+
+button, button:focus {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: @${WLOGOUT_BUTTON_BACKGROUND_COLOR};
+    background-size: 20%;
+    border-radius: 30px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: @${WLOGOUT_BUTTON_COLOR};
+    box-shadow: none;
+    text-shadow: none;
+    animation: gradient_f 20s ease-in infinite;
+}
+
+button:hover {
+    background-color: @${WLOGOUT_BUTTON_HOVER_BACKGROUND_COLOR};
+    background-size: 30%;
+    border-radius: 30px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55,0.0,.28,1.682);
+}
+
+#lock {
+    background-image: url("./icons/lock-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_COLOR}.svg");
+}
+button:hover#lock {
+    background-image: url("./icons/lock-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_HOVER_COLOR}.svg");
+    margin : ${WLOGOUT_BUTTON_HOVER_MARGIN}px 0px 0px 0px;
+}
+
+#logout {
+    background-image: url("./icons/logout-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_COLOR}.svg");
+}
+button:hover#logout {
+    background-image: url("./icons/logout-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_HOVER_COLOR}.svg");
+    margin : 0px 0px ${WLOGOUT_BUTTON_HOVER_MARGIN}px 0px;
+}
+
+#suspend {
+    background-image: url("./icons/suspend-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_COLOR}.svg");
+}
+button:hover#suspend {
+    background-image: url("./icons/suspend-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_HOVER_COLOR}.svg");
+    margin : ${WLOGOUT_BUTTON_HOVER_MARGIN}px 0px 0px 0px;
+}
+
+#shutdown {
+    background-image: url("./icons/shutdown-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_COLOR}.svg");
+}
+button:hover#shutdown {
+    background-image: url("./icons/shutdown-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_HOVER_COLOR}.svg");
+    margin : 0px 0px ${WLOGOUT_BUTTON_HOVER_MARGIN}px 0px;
+}
+
+#hibernate {
+    background-image: url("./icons/hibernate-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_COLOR}.svg");
+}
+button:hover#hibernate {
+    background-image: url("./icons/hibernate-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_HOVER_COLOR}.svg");
+    margin : ${WLOGOUT_BUTTON_HOVER_MARGIN}px 0px 0px 0px;
+}
+
+#reboot {
+    background-image: url("./icons/reboot-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_COLOR}.svg");
+}
+button:hover#reboot {
+    background-image: url("./icons/reboot-${THEME_NAME}-${THEME_FLAVOR}-${WLOGOUT_BUTTON_HOVER_COLOR}.svg");
+    margin : 0px 0px ${WLOGOUT_BUTTON_HOVER_MARGIN}px 0px;
+}

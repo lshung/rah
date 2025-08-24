@@ -137,7 +137,7 @@
 
     "custom/logout": {
         "format": "\uf011",
-        "on-click": "wlogout --protocol layer-shell",
+        "on-click": "rah -x wlogout",
         "tooltip": false,
         "interval": "once"
     },
