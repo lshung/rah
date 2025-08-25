@@ -43,15 +43,19 @@ setup_style() {
     cp "$APP_CONFIGS_WLOGOUT_DIR/styles/$WLOGOUT_STYLE/config" "$WLOGOUT_CONFIG_DIR/config"
 
     # Process style.css with environment variables
-    export WAYBAR_CONFIG_DIR
     export THEME_NAME
     export THEME_FLAVOR
     export CACHE_WALLPAPERS_DIR
     export WLOGOUT_FONT_SIZE
+    export WLOGOUT_TEXT_COLOR
+    export WLOGOUT_TEXT_HOVER_COLOR
     export WLOGOUT_BUTTON_COLOR
     export WLOGOUT_BUTTON_HOVER_COLOR
     export WLOGOUT_BUTTON_BACKGROUND_COLOR
     export WLOGOUT_BUTTON_HOVER_BACKGROUND_COLOR
+    export WLOGOUT_BUTTON_BORDER_COLOR
+    export WLOGOUT_VERTICAL_MARGIN
+    export WLOGOUT_HORIZONTAL_MARGIN
     export WLOGOUT_BUTTON_HOVER_MARGIN
     envsubst < "$APP_CONFIGS_WLOGOUT_DIR/styles/$WLOGOUT_STYLE/style.css" > "$WLOGOUT_CONFIG_DIR/style.css"
 }
