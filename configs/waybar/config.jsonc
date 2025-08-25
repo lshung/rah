@@ -9,7 +9,7 @@
     "reload_style_on_change": true,
     "modules-left": ["custom/arch-logo", "hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "network", "bluetooth", "battery", "custom/caffeine", "custom/logout"],
+    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "network", "bluetooth", "battery", "idle_inhibitor", "custom/logout"],
 
     // Hyprland-specific modules
     "hyprland/workspaces": {
@@ -125,14 +125,13 @@
         "on-click": "pavucontrol"
     },
 
-    "custom/caffeine": {
-        "format": "{text}",
-        "tooltip": false,
-        "exec": "sleep 0.1 && pgrep -x caffeine >/dev/null && echo '{\"text\": \"\udb80\udd76\", \"class\": \"on\"}' || echo '{\"text\": \"\udb83\udfaa\", \"class\": \"off\"}'",
-        "exec-on-event": true,
-        "return-type": "json",
-        "on-click": "pgrep -x caffeine >/dev/null && pkill -x caffeine || caffeine &",
-        "interval": 60
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "\udb80\udd76",
+            "deactivated": "\udb83\udfaa"
+        },
+        "tooltip": false
     },
 
     "custom/logout": {

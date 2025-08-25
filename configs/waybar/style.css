@@ -110,7 +110,7 @@ window#waybar.empty #window {
 #pulseaudio,
 #battery,
 #bluetooth,
-#custom-caffeine,
+#idle_inhibitor,
 #custom-logout {
     color: @subtext1;
     background: alpha(@surface0, 0.8);
@@ -130,14 +130,14 @@ window#waybar.empty #window {
 #pulseaudio:hover,
 #battery:hover,
 #bluetooth:hover,
-#custom-caffeine:hover,
+#idle_inhibitor:hover,
 #custom-logout:hover,
 #temperature.critical:hover,
 #pulseaudio.muted:hover,
 #network.disconnected:hover,
 #battery.critical:hover,
 #battery.warning:hover,
-#custom-caffeine.off:hover {
+#idle_inhibitor.deactivated:hover {
     background: @accent;
     color: @base;
 }
@@ -146,7 +146,7 @@ window#waybar.empty #window {
 #pulseaudio.muted,
 #network.disconnected,
 #battery.critical,
-#custom-caffeine.off {
+#idle_inhibitor.deactivated {
     background: @red;
     color: @surface0;
 }
