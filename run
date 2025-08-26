@@ -15,10 +15,10 @@ if [ -f "$APP_CONFIG_FILE" ]; then
 fi
 
 # Source utility functions
-source "$APP_SETUP_UTILS_DIR/download.sh"
-source "$APP_SETUP_UTILS_DIR/sync-contents.sh"
-source "$APP_SETUP_UTILS_DIR/get-color-accent2.sh"
-source "$APP_SETUP_UTILS_DIR/get-theme-color.sh"
+for file in "$APP_UTILS_DIR"/*; do
+    # Source if file is a regular file, not a directory
+    [[ -f "$file" ]] && source "$file"
+done
 
 # Create symlink
 ln -sf "$APP_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"

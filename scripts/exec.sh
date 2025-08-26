@@ -17,6 +17,7 @@ show_usage() {
     echo "  --help, -h              Show help"
     echo ""
     echo "Subcommands:"
+    echo "  hyprlock                Launch hyprlock"
     echo "  rofi-launcher           Launch rofi"
     echo "  wallpaper               Change wallpaper"
     echo "  wallpaper-selection     Select wallpaper from rofi menu"
@@ -37,6 +38,10 @@ else
         --help|-h)
             show_usage
             exit 0
+            ;;
+        hyprlock)
+            shift
+            source "$APP_SCRIPTS_DIR/hyprlock.sh" "$@"
             ;;
         rofi-launcher)
             shift

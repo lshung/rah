@@ -29,12 +29,15 @@ APP_SCRIPTS_DIR="$APP_DIR"/scripts
 # App setup paths
 APP_SETUP_DIR="$APP_DIR"/setup
 APP_SETUP_MODULES_DIR="$APP_SETUP_DIR"/modules
-APP_SETUP_UTILS_DIR="$APP_SETUP_DIR"/utils
 
-# Wallpapers directories
+# App utils paths
+APP_UTILS_DIR="$APP_DIR"/utils
+
+# Wallpapers directories and settings
 WALLPAPERS_DIR="$HOME/.local/share/wallpapers"
 CACHE_WALLPAPERS_DIR="$HOME/.cache/wallpapers"
 CACHE_WALLPAPERS_THUMBNAILS_DIR="$HOME/.cache/wallpapers/thumbnails"
+WALLPAPER_ALLOWED_EXTENSIONS="jpg|jpeg|png|bmp|gif|webp"
 
 # Configs directories
 CONFIG_DIR="$HOME/.config"
@@ -66,6 +69,10 @@ HYPRIDLE_DIM_DISPLAY_TIMEOUT=60
 HYPRIDLE_LOCK_SESSION_TIMEOUT=120
 HYPRIDLE_TURN_OFF_DISPLAY_TIMEOUT=300
 HYPRIDLE_SUSPEND_TIMEOUT=600
+
+# Hyprlock
+HYPRLOCK_WALLPAPER="current"
+HYPRLOCK_WALLPAPER_ALLOWED_EXTENSIONS="jpg|jpeg|png|bmp|webp"
 
 # Rofi
 ROFI_STYLE="style-1"
