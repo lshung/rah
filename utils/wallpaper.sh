@@ -81,6 +81,18 @@ util_wallpaper_get_random_wallpaper() {
     echo "$wallpaper_file"
 }
 
+util_wallpaper_get_wallpapers_list() {
+    local wallpapers_dir=${1:-$WALLPAPERS_DIR}
+    local allowed_extensions=${2:-$WALLPAPER_ALLOWED_EXTENSIONS}
+
+    # Convert | to \| for regex pattern of find command
+    local allowed_extensions="${allowed_extensions//|/\\|}"
+    # Get list of wallpapers with supported extensions using find command
+    local wallpapers_list=($(find "$wallpapers_dir" -maxdepth 1 -type f -iregex ".*\.\($allowed_extensions\)"))
+    # Print file paths
+    echo "${wallpapers_list[@]}"
+}
+
 # Function to get the current wallpaper
 util_wallpaper_get_current_wallpaper() {
     # Print current wallpaper file path

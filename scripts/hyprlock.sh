@@ -12,7 +12,6 @@ fi
 # Exit on error
 set -e
 
-# Main execution function
 main() {
     declare_variables
     parse_arguments "$@"
