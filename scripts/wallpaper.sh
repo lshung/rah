@@ -12,46 +12,36 @@ fi
 # Exit on error
 set -e
 
-# Default variables
-WALLPAPER_FILE=""
-ALLOWED_EXTENSIONS=("jpg" "jpeg" "png" "bmp" "gif" "webp")
-PRELOAD="no"
-TRANSITION_TYPE="any"
-TRANSITION_BEZIER="0.43,1.19,1,0.4"
-TRANSITION_DURATION=0.5
-TRANSITION_FPS=60
-BLUR_SIGMA=20
-BRIGHTNESS=-0.1
-CONTRAST=1.05
-RESOLUTION_WIDTH=1920
-RESOLUTION_HEIGHT=1080
-
-# Function to show usage
-show_usage() {
-    echo "Usage: $APP_NAME_LOWER $ACTION wallpaper [OPTIONS]"
-    echo ""
-    echo "Options:"
-    echo "  --help, -h                 Show help"
-    echo "  --preload                  Preload wallpaper without transition"
-    echo "  -f, --file FILE            Specify wallpaper file path"
+# Main execution function
+main() {
+    declare_variables
+    parse_arguments "$@"
+    start_swww_daemon_if_not_running
+    get_wallpaper_file_path
+    change_wallpaper
+    cache_wallpaper
 }
 
-# Function to parse command line arguments
+declare_variables() {
+    WALLPAPER_FILE=""
+    PRELOAD="no"
+}
+
 parse_arguments() {
     while [[ $# -gt 0 ]]; do
         case "$1" in
-            --help|-h)
+            -h|--help)
                 show_usage
                 exit 0
                 ;;
-            --preload)
+            -p|--preload)
                 PRELOAD="yes"
                 ;;
             -f|--file)
                 current_arg="$1"
                 shift
-                [[ -z "$1" ]] && { echo "Error: Option $current_arg requires a file path"; show_usage; exit 1; }
-                WALLPAPER_FILE="$1"
+                WALLPAPER_FILE="${1:-}"
+                [[ -z "$WALLPAPER_FILE" ]] && { echo "Error: Option $current_arg requires a file path"; show_usage; exit 1; }
                 ;;
             *)
                 echo "Error: Invalid option '$1'"
@@ -63,7 +53,15 @@ parse_arguments() {
     done
 }
 
-# Function to check and start swww daemon if not running
+show_usage() {
+    echo "Usage: $APP_NAME_LOWER $ACTION wallpaper [OPTIONS]"
+    echo ""
+    echo "Options:"
+    echo "  -h, --help                 Show help"
+    echo "  -p, --preload              Preload wallpaper without transition"
+    echo "  -f, --file FILE            Specify wallpaper file path"
+}
+
 start_swww_daemon_if_not_running() {
     if ! pgrep -x "swww-daemon" > /dev/null; then
         echo "Starting swww-daemon..."
@@ -72,83 +70,15 @@ start_swww_daemon_if_not_running() {
     fi
 }
 
-# Function to validate wallpaper file
-validate_wallpaper_file() {
-    local file_path="$1"
-
-    validate_wallpaper_file_exists "$file_path" || return 1
-    validate_wallpaper_file_extension "$file_path" || return 1
-}
-
-# Function to validate wallpaper file exists
-validate_wallpaper_file_exists() {
-    local file_path="$1"
-
-    # Check if file exists
-    if [[ ! -f "$file_path" ]]; then
-        echo "Error: Wallpaper file '$file_path' does not exist"
-        return 1
+get_wallpaper_file_path() {
+    if [[ -n "$WALLPAPER_FILE" ]]; then
+        util_wallpaper_validate_wallpaper_file "$WALLPAPER_FILE" || return 1
+    else
+        util_wallpaper_validate_wallpapers_dir || return 1
+        WALLPAPER_FILE="$(util_wallpaper_get_random_wallpaper)"
     fi
 }
 
-# Function to validate wallpaper file extension
-validate_wallpaper_file_extension() {
-    local file_path="$1"
-    local file_extension=$(echo "$file_path" | rev | cut -d'.' -f1 | rev | tr '[:upper:]' '[:lower:]')
-
-    for ext in "${ALLOWED_EXTENSIONS[@]}"; do
-        if [[ "$file_extension" == "$ext" ]]; then
-            return 0
-        fi
-    done
-
-    echo "Error: File extension '$file_extension' not allowed. Allowed extensions: ${ALLOWED_EXTENSIONS[@]}"
-    return 1
-}
-
-# Function to validate wallpaper directory
-validate_wallpaper_dir() {
-    if [ ! -d "$WALLPAPERS_DIR" ]; then
-        echo "Wallpaper directory $WALLPAPERS_DIR does not exist!"
-        return 1
-    fi
-}
-
-# Function to get random wallpaper
-get_random_wallpaper() {
-    local find_args=$(build_find_command_to_find_wallpapers)
-
-    # Get list of image files using the built command array
-    local wallpapers=($(find $find_args))
-
-    # Check if any wallpapers were found
-    if [ ${#wallpapers[@]} -eq 0 ]; then
-        echo "No wallpapers found in $WALLPAPERS_DIR"
-        return 1
-    fi
-
-    # Select random wallpaper and set global variable for other functions
-    WALLPAPER_FILE="${wallpapers[$((RANDOM % ${#wallpapers[@]}))]}"
-}
-
-# Function to build find command for finding wallpapers
-build_find_command_to_find_wallpapers() {
-    # Build find command array from allowed extensions
-    local find_args=("$WALLPAPERS_DIR" "-type" "f")
-
-    for ext in "${ALLOWED_EXTENSIONS[@]}"; do
-        find_args+=("-o" "-iname" "*.$ext")
-    done
-
-    # Remove the first "-o" since it's not needed for the first condition
-    if [[ ${#find_args[@]} -gt 3 ]]; then
-        find_args=("${find_args[@]:0:3}" "${find_args[@]:4}")
-    fi
-
-    echo "${find_args[@]}"
-}
-
-# Function to change wallpaper
 change_wallpaper() {
     if [ "$PRELOAD" = "yes" ]; then
         # Set wallpaper without transition (preload)
@@ -157,25 +87,21 @@ change_wallpaper() {
     else
         # Set wallpaper using swww with random transition
         swww img "$WALLPAPER_FILE" \
-            --transition-type "$TRANSITION_TYPE" \
-            --transition-bezier "$TRANSITION_BEZIER" \
-            --transition-duration "$TRANSITION_DURATION" \
-            --transition-fps "$TRANSITION_FPS" &
+            --transition-type "$SWWW_TRANSITION_TYPE" \
+            --transition-bezier "$SWWW_TRANSITION_BEZIER" \
+            --transition-duration "$SWWW_TRANSITION_DURATION" \
+            --transition-fps "$SWWW_TRANSITION_FPS" &
         echo "Changed wallpaper to: $(basename "$WALLPAPER_FILE")"
     fi
 }
 
-# Function to cache wallpaper files
 cache_wallpaper() {
-    # Create cache directory if it doesn't exist
     mkdir -p "$CACHE_WALLPAPERS_DIR"
-
-    # Detect resolution
-    detect_resolution
+    detect_screen_resolution
 
     # Convert wallpaper to blur and save to cache
     ffmpeg -i "$WALLPAPER_FILE" \
-        -vf "scale=w=${RESOLUTION_WIDTH}:h=${RESOLUTION_HEIGHT}:force_original_aspect_ratio=increase:flags=lanczos,crop=${RESOLUTION_WIDTH}:${RESOLUTION_HEIGHT},gblur=sigma=$BLUR_SIGMA,eq=brightness=$BRIGHTNESS:contrast=$CONTRAST" \
+        -vf "scale=w=${RESOLUTION_WIDTH}:h=${RESOLUTION_HEIGHT}:force_original_aspect_ratio=increase:flags=lanczos,crop=${RESOLUTION_WIDTH}:${RESOLUTION_HEIGHT},gblur=sigma=$WALLPAPER_BLUR_SIGMA,eq=brightness=$WALLPAPER_BLUR_BRIGHTNESS:contrast=$WALLPAPER_BLUR_CONTRAST" \
         -frames:v 1 \
         -update 1 \
         "$CACHE_WALLPAPERS_DIR/blur.jpg" \
@@ -198,37 +124,17 @@ cache_wallpaper() {
         -y >/dev/null 2>&1
 }
 
-# Function to detect screen resolution
-detect_resolution() {
+detect_screen_resolution() {
     # Try to get resolution from hyprctl
-    local resolution=$(hyprctl monitors -j | jq -r '.[] | "\(.width)x\(.height)"' 2>/dev/null)
+    RESOLUTION_WIDTH=$(hyprctl monitors -j | jq -r '.[] | "\(.width)"' 2>/dev/null)
+    RESOLUTION_HEIGHT=$(hyprctl monitors -j | jq -r '.[] | "\(.height)"' 2>/dev/null)
 
     # Fallback: use default values
-    if [ -z "$resolution" ] || [ "$resolution" = "null" ]; then
-        echo "Warning: Could not detect resolution, defaulting to ${RESOLUTION_WIDTH}x${RESOLUTION_HEIGHT}"
-    else
-        # Get width and height from detected resolution and update global resolution variables
-        RESOLUTION_WIDTH=$(echo "$resolution" | cut -d'x' -f1)
-        RESOLUTION_HEIGHT=$(echo "$resolution" | cut -d'x' -f2)
+    if [ -z "$RESOLUTION_WIDTH" ] || [ -z "$RESOLUTION_HEIGHT" ]; then
+        echo "Warning: Could not detect resolution, defaulting to ${DEFAULT_RESOLUTION_WIDTH}x${DEFAULT_RESOLUTION_HEIGHT}" 1>&2
+        RESOLUTION_WIDTH="$DEFAULT_RESOLUTION_WIDTH"
+        RESOLUTION_HEIGHT="$DEFAULT_RESOLUTION_HEIGHT"
     fi
-}
-
-# Main function
-main() {
-    parse_arguments "$@"
-    start_swww_daemon_if_not_running
-
-    if [[ -n "$WALLPAPER_FILE" ]]; then
-        # Use specified file
-        validate_wallpaper_file "$WALLPAPER_FILE" || return 1
-    else
-        # Use random wallpaper from directory
-        validate_wallpaper_dir || return 1
-        get_random_wallpaper || return 1
-    fi
-
-    change_wallpaper
-    cache_wallpaper
 }
 
 # Call main function with arguments
