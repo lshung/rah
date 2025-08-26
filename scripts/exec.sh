@@ -18,7 +18,7 @@ show_usage() {
     echo ""
     echo "Subcommands:"
     echo "  hyprlock                Launch hyprlock"
-    echo "  rofi-launcher           Launch rofi"
+    echo "  rofi                    Launch rofi"
     echo "  wallpaper               Change wallpaper"
     echo "  wallpaper-selection     Select wallpaper from rofi menu"
     echo "  wlogout                 Launch wlogout"
@@ -43,9 +43,9 @@ else
             shift
             source "$APP_SCRIPTS_DIR/hyprlock.sh" "$@"
             ;;
-        rofi-launcher)
+        rofi)
             shift
-            source "$APP_SCRIPTS_DIR/rofi-launcher.sh" "$@"
+            source "$APP_SCRIPTS_DIR/rofi.sh" "$@"
             ;;
         wallpaper)
             shift

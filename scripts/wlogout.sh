@@ -12,11 +12,21 @@ fi
 # Exit on error
 set -e
 
-# Load config of the selected style
-source "$WLOGOUT_CONFIG_DIR/config"
+main() {
+    source_config_of_style
+    launch_wlogout
+}
 
-# Launch wlogout with the config of the selected style
-wlogout -b "$WLOGOUT_BUTTONS_PER_ROW" \
-    -r "$WLOGOUT_ROW_SPACING" \
-    -c "$WLOGOUT_COLUMN_SPACING" \
-    --protocol layer-shell
+source_config_of_style() {
+    source "$WLOGOUT_CONFIG_DIR/config"
+}
+
+launch_wlogout() {
+    wlogout -b "$WLOGOUT_BUTTONS_PER_ROW" \
+        -r "$WLOGOUT_ROW_SPACING" \
+        -c "$WLOGOUT_COLUMN_SPACING" \
+        --protocol layer-shell
+}
+
+# Call main function with arguments
+main "$@"

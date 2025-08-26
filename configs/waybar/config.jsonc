@@ -143,7 +143,7 @@
 
     "custom/arch-logo": {
         "format": "\uf303",
-        "on-click": "rah -x rofi-launcher -s style-launchpad",
+        "on-click": "rah -x rofi -s style-launchpad",
         "tooltip": false,
         "interval": "once"
     }
