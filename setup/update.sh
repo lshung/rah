@@ -24,7 +24,7 @@ show_usage() {
     echo "Usage: $APP_NAME_LOWER $ACTION [OPTIONS]"
     echo ""
     echo "Options:"
-    echo "  --help, -h      Show help"
+    echo "  -h, --help      Show help"
     echo "  fonts           Update fonts module"
     echo "  hyprland        Update hyprland module"
     echo "  icon-themes     Update icon-themes module"
@@ -35,6 +35,7 @@ show_usage() {
     echo "  rofi            Update rofi module"
     echo "  waybar          Update waybar module"
     echo "  wlogout         Update wlogout module"
+    echo "  zsh             Update zsh module"
     echo ""
     echo "If no options are provided, all modules will be updated."
 }
@@ -57,10 +58,11 @@ if [[ $# -eq 0 ]]; then
     source_module "kvantum"
     source_module "hyprland"
     source_module "waybar"
+    source_module "zsh"
     echo "Configuration updated successfully! Please logout to apply changes."
 else
     case "$1" in
-        --help|-h)
+        -h|--help)
             show_usage
             exit 0
             ;;
@@ -93,6 +95,9 @@ else
             ;;
         wlogout)
             source_module "wlogout"
+            ;;
+        zsh)
+            source_module "zsh"
             ;;
         *)
             echo "Error: Invalid option '$1'"
