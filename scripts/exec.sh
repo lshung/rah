@@ -6,12 +6,48 @@
 # Exit on error
 set -e
 
-# Function to show usage
+main() {
+    declare_variables "$@"
+    parse_arguments "$@"
+}
+
+declare_variables() {
+    ACTION="$1"
+}
+
+parse_arguments() {
+    shift
+
+    if [[ $# -eq 0 ]]; then
+        show_usage
+        exit 0
+    else
+        case "$1" in
+            -h|--help)
+                show_usage
+                exit 0
+                ;;
+            hyprlock|\
+            rofi|\
+            wallpaper|\
+            wallpaper-selection|\
+            wlogout)
+                source_shell_script "$@"
+                ;;
+            *)
+                echo "Error: Invalid subcommand '$1'"
+                show_usage
+                exit 1
+                ;;
+        esac
+    fi
+}
+
 show_usage() {
     echo "Usage: $APP_NAME_LOWER $ACTION [SUBCOMMAND] [ARGS]"
     echo ""
     echo "Options:"
-    echo "  --help, -h              Show help"
+    echo "  -h, --help              Show help"
     echo ""
     echo "Subcommands:"
     echo "  hyprlock                Launch hyprlock"
@@ -21,45 +57,18 @@ show_usage() {
     echo "  wlogout                 Launch wlogout"
 }
 
-# Get first option (--exec or -x)
-ACTION="$1"
-# Shift once to remove first option
-shift
+source_shell_script() {
+    local script_name="$1"
+    local script_file="$APP_SCRIPTS_DIR/${script_name}.sh"
 
-# Process command line arguments
-if [[ $# -eq 0 ]]; then
-    show_usage
-    exit 0
-else
-    case "$1" in
-        --help|-h)
-            show_usage
-            exit 0
-            ;;
-        hyprlock)
-            shift
-            source "$APP_SCRIPTS_DIR/hyprlock.sh" "$@"
-            ;;
-        rofi)
-            shift
-            source "$APP_SCRIPTS_DIR/rofi.sh" "$@"
-            ;;
-        wallpaper)
-            shift
-            source "$APP_SCRIPTS_DIR/wallpaper.sh" "$@"
-            ;;
-        wallpaper-selection)
-            shift
-            source "$APP_SCRIPTS_DIR/wallpaper-selection.sh" "$@"
-            ;;
-        wlogout)
-            shift
-            source "$APP_SCRIPTS_DIR/wlogout.sh" "$@"
-            ;;
-        *)
-            echo "Error: Invalid subcommand '$1'"
-            show_usage
-            exit 1
-            ;;
-    esac
-fi
+    if [[ -r "$script_file" ]]; then
+        shift
+        source "$script_file" "$@"
+    else
+        echo "Error: Script '${script_name}.sh' not found or not readable"
+        exit 1
+    fi
+}
+
+# Call main function with arguments
+main "$@"

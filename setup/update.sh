@@ -6,20 +6,74 @@
 # Exit on error
 set -e
 
-# Function to source a specific module
+main() {
+    declare_variables "$@"
+    parse_arguments "$@"
+}
+
+declare_variables() {
+    ACTION="$1"
+}
+
+parse_arguments() {
+    shift
+
+    if [[ $# -eq 0 ]]; then
+        source_all_modules
+    else
+        case "$1" in
+            -h|--help)
+                show_usage
+                exit 0
+                ;;
+            fonts|\
+            hyprland|\
+            icon-themes|\
+            kitty|\
+            kvantum|\
+            nwg-look|\
+            qtct|\
+            rofi|\
+            waybar|\
+            wlogout|\
+            zsh)
+                source_module "$1"
+                ;;
+            *)
+                echo "Error: Invalid option '$1'"
+                show_usage
+                exit 1
+                ;;
+        esac
+    fi
+}
+
+source_all_modules() {
+    source_module "fonts"
+    source_module "icon-themes"
+    source_module "kitty"
+    source_module "wlogout"
+    source_module "nwg-look"
+    source_module "qtct"
+    source_module "rofi"
+    source_module "kvantum"
+    source_module "hyprland"
+    source_module "waybar"
+    source_module "zsh"
+}
+
 source_module() {
     local module_name="$1"
     local module_file="$APP_SETUP_MODULES_DIR/${module_name}.sh"
 
-    if [[ -f "$module_file" ]]; then
+    if [[ -r "$module_file" ]]; then
         source "$module_file"
     else
-        echo "Error: Module '$module_name' not found at $module_file"
+        echo "Error: Module '$module_name' not found or not readable"
         exit 1
     fi
 }
 
-# Function to show usage
 show_usage() {
     echo "Usage: $APP_NAME_LOWER $ACTION [OPTIONS]"
     echo ""
@@ -40,69 +94,5 @@ show_usage() {
     echo "If no options are provided, all modules will be updated."
 }
 
-# Get first option (--update or -u)
-ACTION="$1"
-# Shift once to remove first option
-shift
-
-# Process command line arguments
-if [[ $# -eq 0 ]]; then
-    # No arguments, source all modules
-    source_module "fonts"
-    source_module "icon-themes"
-    source_module "kitty"
-    source_module "wlogout"
-    source_module "nwg-look"
-    source_module "qtct"
-    source_module "rofi"
-    source_module "kvantum"
-    source_module "hyprland"
-    source_module "waybar"
-    source_module "zsh"
-    echo "Configuration updated successfully! Please logout to apply changes."
-else
-    case "$1" in
-        -h|--help)
-            show_usage
-            exit 0
-            ;;
-        fonts)
-            source_module "fonts"
-            ;;
-        hyprland)
-            source_module "hyprland"
-            ;;
-        icon-themes)
-            source_module "icon-themes"
-            ;;
-        kitty)
-            source_module "kitty"
-            ;;
-        kvantum)
-            source_module "kvantum"
-            ;;
-        nwg-look)
-            source_module "nwg-look"
-            ;;
-        qtct)
-            source_module "qtct"
-            ;;
-        rofi)
-            source_module "rofi"
-            ;;
-        waybar)
-            source_module "waybar"
-            ;;
-        wlogout)
-            source_module "wlogout"
-            ;;
-        zsh)
-            source_module "zsh"
-            ;;
-        *)
-            echo "Error: Invalid option '$1'"
-            show_usage
-            exit 1
-            ;;
-    esac
-fi
+# Call main function with arguments
+main "$@"
