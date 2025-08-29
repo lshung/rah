@@ -7,7 +7,7 @@
 set -e
 
 # Catppuccin accent color pairings
-get_accent2_color() {
+util_get_accent2_color_name() {
     local color_name=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 
     case $color_name in

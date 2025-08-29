@@ -21,7 +21,7 @@ prepare() {
 }
 
 sync_config() {
-    sync_contents_of_two_dirs "$APP_CONFIGS_ZSH_DIR" "$ZSH_CONFIG_DIR"
+    util_sync_contents_of_two_dirs "$APP_CONFIGS_ZSH_DIR" "$ZSH_CONFIG_DIR"
     mv "$ZSH_CONFIG_DIR"/.zshenv "$HOME/.zshenv"
 }
 

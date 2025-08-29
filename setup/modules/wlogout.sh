@@ -92,9 +92,9 @@ create_themed_icon() {
     local color_value_hex
 
     # Check if the color is valid
-    if get_theme_color "$THEME_NAME" "$THEME_FLAVOR" "$color_name" >/dev/null 2>&1; then
+    if util_get_theme_color "$THEME_NAME" "$THEME_FLAVOR" "$color_name" >/dev/null 2>&1; then
         # Get the color value
-        color_value_hex=$(get_theme_color "$THEME_NAME" "$THEME_FLAVOR" "$color_name")
+        color_value_hex=$(util_get_theme_color "$THEME_NAME" "$THEME_FLAVOR" "$color_name")
 
         # Create themed icon by replacing the fill color
         sed "s/fill=\"#[0-9a-fA-F]\{6\}\"/fill=\"$color_value_hex\"/g" "$source_icon_file" > "$output_icon_file"

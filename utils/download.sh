@@ -6,29 +6,47 @@
 # Exit on error
 set -e
 
-# Download function with retry and timeout
-download_with_retry() {
+# Declare constants and variables
+readonly UTIL_DOWNLOAD_MAX_RETRIES=3
+readonly UTIL_DOWNLOAD_TIMEOUT=30
+
+util_download_with_retry() {
     local url="$1"
     local output="$2"
-    local max_retries=3
-    local timeout=30
-    local retry_count=0
+    local retry_count=1
 
-    while [ $retry_count -lt $max_retries ]; do
-        echo "Downloading $(basename "$output") (attempt $((retry_count + 1))/$max_retries)..."
+    while [ $retry_count -le $UTIL_DOWNLOAD_MAX_RETRIES ]; do
+        echo "Downloading $(basename "$output") (attempt $retry_count/$UTIL_DOWNLOAD_MAX_RETRIES)..."
 
-        if curl -LsS --connect-timeout $timeout --max-time $((timeout * 2)) -o "$output" "$url"; then
+        if _try_to_download_via_curl "$url" "$output"; then
             echo "Downloaded $(basename "$output") successfully!"
             return 0
-        else
-            retry_count=$((retry_count + 1))
-            if [ $retry_count -lt $max_retries ]; then
-                echo "Download of $(basename "$output") failed. Retrying after 3 seconds... (attempt $retry_count/$max_retries)"
-                sleep 3
-            else
-                echo "Download of $(basename "$output") failed after $max_retries attempts. Please check your network connection."
-                return 1
-            fi
         fi
+
+        retry_count=$(( retry_count + 1 ))
+        _should_retry_to_download "$retry_count" || return 1
     done
+}
+
+_try_to_download_via_curl() {
+    local url="$1"
+    local output="$2"
+
+    curl -LsS \
+        --connect-timeout $UTIL_DOWNLOAD_TIMEOUT \
+        --max-time $((UTIL_DOWNLOAD_TIMEOUT * 2)) \
+        -o "$output" \
+        "$url" >/dev/null 2>&1
+}
+
+_should_retry_to_download() {
+    local retry_count="$1"
+
+    if [ $retry_count -le $UTIL_DOWNLOAD_MAX_RETRIES ]; then
+        echo "Warning: Download failed, retrying after 3 seconds..."
+        sleep 3
+    else
+        echo "Error: Download failed after $UTIL_DOWNLOAD_MAX_RETRIES attempts"
+        return 1
+    fi
 }

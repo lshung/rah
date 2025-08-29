@@ -6,12 +6,25 @@
 # Exit on error
 set -e
 
-# Sync contents of two directories
-sync_contents_of_two_dirs() {
+util_sync_contents_of_two_dirs() {
     local source_dir="$1"
     local dest_dir="$2"
 
-    # Validate arguments
+    _validate_two_dirs_provided "$source_dir" "$dest_dir" || return 1
+
+    echo "Syncing contents of $source_dir to $dest_dir..."
+
+    _copy_files_if_new_or_different "$source_dir" "$dest_dir"
+    _remove_files_in_destination_but_not_in_source "$source_dir" "$dest_dir"
+    _remove_empty_dirs_in_destination_but_not_in_source "$source_dir" "$dest_dir"
+
+    echo "Sync contents completed!"
+}
+
+_validate_two_dirs_provided() {
+    local source_dir="$1"
+    local dest_dir="$2"
+
     if [[ $# -ne 2 ]]; then
         echo "Error: Two arguments are required"
         return 1
@@ -26,54 +39,62 @@ sync_contents_of_two_dirs() {
         echo "Error: Destination directory '$dest_dir' does not exist"
         return 1
     fi
+}
 
-    echo "Syncing contents of $source_dir to $dest_dir..."
+_copy_files_if_new_or_different() {
+    local source_dir="$1"
+    local dest_dir="$2"
 
-    # Step 1: Copy all files from source to destination (preserving directory structure)
     find "$source_dir" -type f -print0 | while IFS= read -r -d '' source_file; do
-        # Get relative path from source directory
-        relative_path="${source_file#$source_dir/}"
-        dest_file="$dest_dir/$relative_path"
-        dest_dir_path="$(dirname "$dest_file")"
+        local relative_path=$(_get_relative_path_of_a_path_from_dir "$source_file" "$source_dir")
+        local dest_file="$dest_dir/$relative_path"
+        local dest_dir_path="$(dirname "$dest_file")"
 
-        # Create destination directory if it doesn't exist
         mkdir -p "$dest_dir_path"
 
-        # Copy file if it doesn't exist or is different
         if [[ ! -f "$dest_file" ]] || ! cmp -s "$source_file" "$dest_file"; then
-            echo "Copying: $relative_path"
             cp --preserve=timestamps "$source_file" "$dest_file"
+            echo "Copied: $relative_path"
         fi
     done
+}
 
-    # Step 2: Remove files in destination that don't exist in source
+_get_relative_path_of_a_path_from_dir() {
+    local path="$1"
+    local dir="$2"
+    local relative_path="${path#$dir/}"
+    echo "$relative_path"
+}
+
+_remove_files_in_destination_but_not_in_source() {
+    local source_dir="$1"
+    local dest_dir="$2"
+
     find "$dest_dir" -type f -print0 | while IFS= read -r -d '' dest_file; do
-        # Get relative path from destination directory
-        relative_path="${dest_file#$dest_dir/}"
-        source_file="$source_dir/$relative_path"
+        local relative_path=$(_get_relative_path_of_a_path_from_dir "$dest_file" "$dest_dir")
+        local source_file="$source_dir/$relative_path"
 
-        # Remove file if it doesn't exist in source
         if [[ ! -f "$source_file" ]]; then
-            echo "Removing: $relative_path"
             rm -f "$dest_file"
+            echo "Removed: $relative_path"
         fi
     done
+}
 
-    # Step 3: Remove empty directories in destination that don't exist in source
+_remove_empty_dirs_in_destination_but_not_in_source() {
+    local source_dir="$1"
+    local dest_dir="$2"
+
     find "$dest_dir" -type d -print0 | sort -r | while IFS= read -r -d '' dest_directory; do
         # Skip the destination directory itself
         [[ "$dest_directory" == "$dest_dir" ]] && continue
 
-        # Get relative path from destination directory
-        relative_path="${dest_directory#$dest_dir/}"
-        source_directory="$source_dir/$relative_path"
+        local relative_path=$(_get_relative_path_of_a_path_from_dir "$dest_directory" "$dest_dir")
+        local source_directory="$source_dir/$relative_path"
 
-        # Remove directory if it doesn't exist in source and is empty
         if [[ ! -d "$source_directory" ]] && [[ -z "$(ls -A "$dest_directory")" ]]; then
-            echo "Removing empty directory: $relative_path"
             rmdir "$dest_directory" 2>/dev/null
+            echo "Removed empty directory: $relative_path"
         fi
     done
-
-    echo "Sync completed!"
 }

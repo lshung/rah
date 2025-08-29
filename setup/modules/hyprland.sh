@@ -14,12 +14,12 @@ if [ -n "$HYPRLAND_COLOR_ACCENT2" ]; then
 elif [ -n "$THEME_ACCENT2" ]; then
     COLOR_ACCENT2="$THEME_ACCENT2"
 else
-    COLOR_ACCENT2=$(get_accent2_color "$THEME_ACCENT")
+    COLOR_ACCENT2=$(util_get_accent2_color_name "$THEME_ACCENT")
 fi
 
 # Sync Hyprland configuration
 mkdir -p "$HYPR_CONFIG_DIR"
-sync_contents_of_two_dirs "$APP_CONFIGS_HYPR_DIR" "$HYPR_CONFIG_DIR"
+util_sync_contents_of_two_dirs "$APP_CONFIGS_HYPR_DIR" "$HYPR_CONFIG_DIR"
 
 echo "Editing Hyprland variables configuration..."
 sed -i "s/^\$COLOR_THEME = .*$/\$COLOR_THEME = ${THEME_NAME}-${THEME_FLAVOR}/g" "$HYPRLAND_CONFIG_DIR"/variables.conf
