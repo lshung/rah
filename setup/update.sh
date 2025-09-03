@@ -34,6 +34,7 @@ parse_arguments() {
             nwg-look|\
             qtct|\
             rofi|\
+            sddm|\
             vscode|\
             waybar|\
             wlogout|\
@@ -58,6 +59,7 @@ source_all_modules() {
     source_module "qtct"
     source_module "rofi"
     source_module "kvantum"
+    source_module "sddm"
     source_module "vscode"
     source_module "zsh"
     source_module "hyprland"
@@ -89,6 +91,7 @@ show_usage() {
     echo "  nwg-look        Update nwg-look module"
     echo "  qtct            Update qtct module"
     echo "  rofi            Update rofi module"
+    echo "  sddm            Update sddm module"
     echo "  vscode          Update vscode module (Code, Code - OSS, VSCodium, Cursor)"
     echo "  waybar          Update waybar module"
     echo "  wlogout         Update wlogout module"

@@ -50,6 +50,11 @@ ZSH_CONFIG_DIR="$CONFIG_DIR/zsh"
 ROFI_CONFIG_DIR="$CONFIG_DIR/rofi"
 ROFI_CONFIG_STYLES_DIR="$ROFI_CONFIG_DIR/styles"
 
+# SDDM
+SDDM_THEMES_DIR="/usr/share/sddm/themes"
+SDDM_CONFIG_DIR="/usr/lib/sddm/sddm.conf.d"
+SDDM_CONFIG_FILE="$SDDM_CONFIG_DIR/$APP_NAME_LOWER.conf"
+
 # VSCode
 CODE_CONFIG_USER_DIR="$CONFIG_DIR/Code/User"
 CODEOSS_CONFIG_USER_DIR="$CONFIG_DIR/Code - OSS/User"
@@ -81,6 +86,9 @@ ROFI_STYLE="style-1"
 
 # Wlogout
 WLOGOUT_STYLE="style-1"
+
+# SDDM
+SDDM_THEME_NAME="sugar-candy"
 
 
 ####################################################################
