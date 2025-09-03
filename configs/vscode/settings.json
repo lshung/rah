@@ -1,0 +1,16 @@
+{
+    "workbench.colorTheme": "Default Dark Modern",
+    "workbench.activityBar.location": "top",
+    "window.commandCenter": true,
+    "window.customTitleBarVisibility": "auto",
+    "editor.fontSize": 12,
+    "editor.fontFamily": "'JetbrainsMono Nerd Font', monospace",
+    "security.workspace.trust.untrustedFiles": "newWindow",
+    "security.workspace.trust.startupPrompt": "never",
+    "security.workspace.trust.enabled": false,
+    "terminal.external.linuxExec": "kitty",
+    "terminal.explorerKind": "both",
+    "terminal.sourceControlRepositoriesKind": "both",
+    "extensions.autoUpdate": false,
+    "telemetry.telemetryLevel": "off"
+}
