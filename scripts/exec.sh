@@ -31,6 +31,7 @@ parse_arguments() {
             rofi|\
             wallpaper|\
             wallpaper-selection|\
+            waybar-fcitx5|\
             wlogout)
                 source_shell_script "$@"
                 ;;
@@ -54,6 +55,7 @@ show_usage() {
     echo "  rofi                    Launch rofi"
     echo "  wallpaper               Change wallpaper"
     echo "  wallpaper-selection     Select wallpaper from rofi menu"
+    echo "  waybar-fcitx5           Display Fcitx5 input method in waybar"
     echo "  wlogout                 Launch wlogout"
 }
 

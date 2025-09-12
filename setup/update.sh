@@ -26,6 +26,7 @@ parse_arguments() {
                 show_usage
                 exit 0
                 ;;
+            fcitx5|\
             fonts|\
             hyprland|\
             icon-themes|\
@@ -83,6 +84,7 @@ show_usage() {
     echo ""
     echo "Options:"
     echo "  -h, --help      Show help"
+    echo "  fcitx5          Update fcitx5 module"
     echo "  fonts           Update fonts module"
     echo "  hyprland        Update hyprland module"
     echo "  icon-themes     Update icon-themes module"
