@@ -9,7 +9,7 @@
     "reload_style_on_change": true,
     "modules-left": ["custom/arch-logo", "hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "custom/fcitx5", "network", "bluetooth", "battery", "custom/key-bindings", "idle_inhibitor", "custom/logout"],
+    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "custom/fcitx5", "network", "bluetooth", "battery", "custom/key-bindings", "custom/clipboard", "idle_inhibitor", "custom/logout"],
 
     // Hyprland-specific modules
     "hyprland/workspaces": {
@@ -138,6 +138,13 @@
         "format": "\uf11c",
         "on-click": "rah -x key-bindings -t hyprland -s rofi",
         "on-click-right": "rah -x key-bindings -t zsh -s rofi",
+        "interval": "once",
+        "tooltip": false
+    },
+
+    "custom/clipboard": {
+        "format": "\uf07f",
+        "on-click": "rah -x clipboard",
         "interval": "once",
         "tooltip": false
     },

@@ -27,6 +27,7 @@ parse_arguments() {
                 show_usage
                 exit 0
                 ;;
+            clipboard|\
             hyprlock|\
             key-bindings|\
             rofi|\
@@ -52,8 +53,9 @@ show_usage() {
     echo "  -h, --help              Show help"
     echo ""
     echo "Subcommands:"
+    echo "  clipboard               Show clipboard history on rofi menu"
     echo "  hyprlock                Launch hyprlock"
-    echo "  key-bindings            Launch key bindings"
+    echo "  key-bindings            Show key bindings on terminal or rofi menu"
     echo "  rofi                    Launch rofi"
     echo "  wallpaper               Change wallpaper"
     echo "  wallpaper-selection     Select wallpaper from rofi menu"
