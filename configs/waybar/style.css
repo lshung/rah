@@ -111,6 +111,7 @@ window#waybar.empty #window {
 #battery,
 #bluetooth,
 #idle_inhibitor,
+#custom-key-bindings,
 #custom-fcitx5,
 #custom-logout {
     color: @subtext1;
@@ -132,6 +133,7 @@ window#waybar.empty #window {
 #battery:hover,
 #bluetooth:hover,
 #idle_inhibitor:hover,
+#custom-key-bindings:hover,
 #custom-fcitx5:hover,
 #custom-logout:hover,
 #temperature.critical:hover,

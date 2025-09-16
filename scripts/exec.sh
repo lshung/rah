@@ -28,6 +28,7 @@ parse_arguments() {
                 exit 0
                 ;;
             hyprlock|\
+            key-bindings|\
             rofi|\
             wallpaper|\
             wallpaper-selection|\
@@ -52,6 +53,7 @@ show_usage() {
     echo ""
     echo "Subcommands:"
     echo "  hyprlock                Launch hyprlock"
+    echo "  key-bindings            Launch key bindings"
     echo "  rofi                    Launch rofi"
     echo "  wallpaper               Change wallpaper"
     echo "  wallpaper-selection     Select wallpaper from rofi menu"
