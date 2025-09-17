@@ -28,6 +28,7 @@ parse_arguments() {
                 exit 0
                 ;;
             clipboard|\
+            color-picker|\
             hyprlock|\
             key-bindings|\
             rofi|\
@@ -54,6 +55,7 @@ show_usage() {
     echo ""
     echo "Subcommands:"
     echo "  clipboard               Show clipboard history on rofi menu"
+    echo "  color-picker            Launch color picker application"
     echo "  hyprlock                Launch hyprlock"
     echo "  key-bindings            Show key bindings on terminal or rofi menu"
     echo "  rofi                    Launch rofi"

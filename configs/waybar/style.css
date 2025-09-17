@@ -113,6 +113,7 @@ window#waybar.empty #window {
 #idle_inhibitor,
 #custom-key-bindings,
 #custom-clipboard,
+#custom-color-picker,
 #custom-fcitx5,
 #custom-logout {
     color: @subtext1;
@@ -136,6 +137,7 @@ window#waybar.empty #window {
 #idle_inhibitor:hover,
 #custom-key-bindings:hover,
 #custom-clipboard:hover,
+#custom-color-picker:hover,
 #custom-fcitx5:hover,
 #custom-logout:hover,
 #temperature.critical:hover,

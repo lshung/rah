@@ -9,7 +9,7 @@
     "reload_style_on_change": true,
     "modules-left": ["custom/arch-logo", "hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "custom/fcitx5", "network", "bluetooth", "battery", "custom/key-bindings", "custom/clipboard", "idle_inhibitor", "custom/logout"],
+    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "custom/fcitx5", "network", "bluetooth", "battery", "custom/key-bindings", "custom/color-picker", "custom/clipboard", "idle_inhibitor", "custom/logout"],
 
     // Hyprland-specific modules
     "hyprland/workspaces": {
@@ -145,6 +145,13 @@
     "custom/clipboard": {
         "format": "\uf07f",
         "on-click": "rah -x clipboard",
+        "interval": "once",
+        "tooltip": false
+    },
+
+    "custom/color-picker": {
+        "format": "\uf1fb",
+        "on-click": "rah -x color-picker",
         "interval": "once",
         "tooltip": false
     },
