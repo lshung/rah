@@ -5,10 +5,9 @@
 # The style name is the name of the file .rasi located in the directory $ROFI_CONFIG_STYLES_DIR
 
 # Exit if this script is being executed directly
-[[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31mERR\033[0m] This script cannot be executed directly" 1>&2; exit 1; }
+[[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
-# Exit on error
-set -e
+set -euo pipefail
 
 main() {
     declare_variables

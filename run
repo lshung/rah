@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Exit on error
-set -e
+set -euo pipefail
 
 main() {
     get_directory_of_this_app
@@ -9,6 +8,8 @@ main() {
     source_app_config_if_exists
     source_utility_functions
     create_symlink_to_this_app
+    create_log_dir_if_not_exists
+    clean_up_log_files
     parse_arguments "$@"
 }
 
@@ -32,6 +33,14 @@ source_utility_functions() {
 
 create_symlink_to_this_app() {
     ln -sf "$APP_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"
+}
+
+create_log_dir_if_not_exists() {
+    mkdir -p "$APP_LOG_DIR"
+}
+
+clean_up_log_files() {
+    util_clean_up_log_files
 }
 
 parse_arguments() {
