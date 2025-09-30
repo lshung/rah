@@ -26,9 +26,7 @@ parse_arguments() {
                 exit 0
                 ;;
             fcitx5|\
-            fonts|\
             hyprland|\
-            icon-themes|\
             kitty|\
             kvantum|\
             nwg-look|\
@@ -51,8 +49,6 @@ parse_arguments() {
 }
 
 source_all_modules() {
-    source_module "fonts"
-    source_module "icon-themes"
     source_module "kitty"
     source_module "wlogout"
     source_module "nwg-look"
@@ -84,9 +80,7 @@ show_usage() {
     echo "Options:"
     echo "  -h, --help      Show help"
     echo "  fcitx5          Update fcitx5 module"
-    echo "  fonts           Update fonts module"
     echo "  hyprland        Update hyprland module"
-    echo "  icon-themes     Update icon-themes module"
     echo "  kitty           Update kitty module"
     echo "  kvantum         Update kvantum module"
     echo "  nwg-look        Update nwg-look module"

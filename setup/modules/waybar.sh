@@ -26,5 +26,5 @@ sed -i "s/@@flavor@@/$THEME_FLAVOR/g" "$WAYBAR_CONFIG_DIR"/style.css
 sed -i "s/@@accent@@/$THEME_ACCENT/g" "$WAYBAR_CONFIG_DIR"/style.css
 
 # Reload
-killall waybar > /dev/null 2>&1 || true
-waybar &
+killall waybar >/dev/null 2>&1 || true
+waybar >/dev/null 2>&1 &

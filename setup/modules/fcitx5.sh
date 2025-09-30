@@ -25,15 +25,17 @@ declare_variables() {
 install_required_packages_if_missing() {
     echo "Installing required packages if missing..."
 
-    local missing=()
-    for pkg in "${FCITX5_PACKAGES[@]}"; do
-        if ! pacman -Qi "$pkg" >/dev/null 2>&1; then
-            missing+=("$pkg")
+    local missing_packages=()
+    for package in "${FCITX5_PACKAGES[@]}"; do
+        if ! util_check_if_package_is_installed "$package"; then
+            missing_packages+=("$package")
         fi
     done
 
-    if [[ ${#missing[@]} -gt 0 ]]; then
-        sudo pacman -S --needed --noconfirm "${missing[@]}"
+    if [[ ${#missing_packages[@]} -gt 0 ]]; then
+        sudo -v
+        util_update_system
+        util_install_packages "${missing_packages[@]}"
     fi
 }
 

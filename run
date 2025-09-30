@@ -22,7 +22,7 @@ source_environment_variables() {
 }
 
 source_app_config_if_exists() {
-    [ -r "$APP_CONFIG_FILE" ] && source "$APP_CONFIG_FILE"
+    [ -r "$APP_CONFIG_FILE" ] && source "$APP_CONFIG_FILE" || true
 }
 
 source_utility_functions() {
@@ -32,6 +32,7 @@ source_utility_functions() {
 }
 
 create_symlink_to_this_app() {
+    mkdir -p "$HOME/.local/bin"
     ln -sf "$APP_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"
 }
 

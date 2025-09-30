@@ -6,13 +6,14 @@
 set -euo pipefail
 
 main() {
-    echo "Updating Zsh configuration..."
+    log_info "Updating Zsh configuration..."
 
     prepare
     sync_config
+    test_new_config
 
-    echo "Zsh configuration updated successfully!"
-    echo "To apply changes, please manually run command 'source $HOME/.zshenv'"
+    log_ok "Zsh configuration updated successfully."
+    log_warning "To apply changes, please manually run command 'source $HOME/.zshenv'"
 }
 
 prepare() {
@@ -22,6 +23,17 @@ prepare() {
 sync_config() {
     util_sync_contents_of_two_dirs "$APP_CONFIGS_ZSH_DIR" "$ZSH_CONFIG_DIR"
     mv "$ZSH_CONFIG_DIR"/.zshenv "$HOME/.zshenv"
+}
+
+test_new_config() {
+    log_info "Testing new Zsh configuration..."
+
+    if ! zsh -c "source $ZSH_CONFIG_DIR/.zshrc"; then
+        log_failed "Failed to test new Zsh configuration."
+        return 1
+    fi
+
+    log_ok "New Zsh configuration tested successfully."
 }
 
 main "$@"
