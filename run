@@ -14,11 +14,11 @@ main() {
 }
 
 get_directory_of_this_app() {
-    APP_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+    ROOT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 }
 
 source_environment_variables() {
-    source "$APP_DIR/env"
+    source "$ROOT_DIR/app/env"
 }
 
 source_app_config_if_exists() {
@@ -33,7 +33,7 @@ source_utility_functions() {
 
 create_symlink_to_this_app() {
     mkdir -p "$HOME/.local/bin"
-    ln -sf "$APP_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"
+    ln -sf "$ROOT_DIR"/run "$HOME/.local/bin/$APP_NAME_LOWER"
 }
 
 create_log_dir_if_not_exists() {
@@ -56,15 +56,14 @@ parse_arguments() {
                 ;;
             -i|--install)
                 log_info "Running command '$APP_NAME_LOWER $*'..."
-                source "$APP_SETUP_DIR/install.sh" "$@"
+                source "$APP_DIR/install.sh" "$@"
                 ;;
             -u|--update)
                 log_info "Running command '$APP_NAME_LOWER $*'..."
-                source "$APP_SETUP_DIR/update.sh" "$@"
+                source "$APP_DIR/update.sh" "$@"
                 ;;
             -x|--exec)
-                log_info "Running command '$APP_NAME_LOWER $*'..." "$LOG_SCRIPT_ENABLED"
-                source "$APP_SCRIPTS_DIR/exec.sh" "$@"
+                source "$APP_DIR/exec.sh" "$@"
                 ;;
             *)
                 log_error "Invalid option '$1'." "no"

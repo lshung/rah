@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -125,7 +124,7 @@ download_wallpapers_if_needed() {
 update_config_for_all_modules() {
     log_info "Updating configuration for all modules..."
 
-    source "$APP_SETUP_DIR/update.sh" "--update"
+    source "$APP_DIR/update.sh" "--update"
 }
 
 change_shell_to_zsh_if_not_set() {

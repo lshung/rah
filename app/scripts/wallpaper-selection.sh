@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# This file is meant to be sourced by scripts/exec.sh
-# It will select a wallpaper from a rofi menu
+# Select a wallpaper from rofi menu
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -98,5 +96,4 @@ build_rofi_entries() {
     done
 }
 
-# Call main function with arguments
 main "$@"

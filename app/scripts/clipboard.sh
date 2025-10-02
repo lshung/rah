@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# This file is meant to be sourced by scripts/exec.sh
-# It will get clipboard history and show on rofi menu
+# Get clipboard history and show on rofi menu
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -83,5 +81,4 @@ remove_temp_file() {
     rm -f "$CLIBOARD_HISTORY_ENCODED_TEMP_FILE"
 }
 
-# Call main function with arguments
 main "$@"

@@ -58,7 +58,7 @@ source_all_modules() {
 
 source_module() {
     local module_name="$1"
-    local module_file="$APP_SETUP_MODULES_DIR/${module_name}.sh"
+    local module_file="$APP_MODULES_DIR/${module_name}.sh"
 
     if [[ -r "$module_file" ]]; then
         source "$module_file"

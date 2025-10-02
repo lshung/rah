@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# This file is meant to be sourced by scripts/exec.sh
-# It will launch color picker application
+# Launch color picker application
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -41,5 +39,4 @@ launch_color_picker() {
     $COLOR_PICKER_COMMAND
 }
 
-# Call main function with arguments
 main "$@"

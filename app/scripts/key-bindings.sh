@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# This file is meant to be sourced by scripts/exec.sh
-# It will get key bindings
+# Get key bindings of hyprland or zsh, and show on terminal or rofi menu
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -87,5 +85,4 @@ get_key_bindings_list() {
     fi
 }
 
-# Call main function with arguments
 main "$@"

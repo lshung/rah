@@ -25,6 +25,7 @@ LOG_SCRIPT_ENABLED="no"
 ####################################################################
 
 # App configs paths
+APP_DIR="$ROOT_DIR/app"
 APP_CONFIGS_DIR="$APP_DIR"/configs
 APP_CONFIGS_FCITX5_DIR="$APP_CONFIGS_DIR"/fcitx5
 APP_CONFIGS_HYPR_DIR="$APP_CONFIGS_DIR"/hypr
@@ -41,8 +42,7 @@ APP_CONFIGS_ZSH_DIR="$APP_CONFIGS_DIR"/zsh
 APP_SCRIPTS_DIR="$APP_DIR"/scripts
 
 # App setup paths
-APP_SETUP_DIR="$APP_DIR"/setup
-APP_SETUP_MODULES_DIR="$APP_SETUP_DIR"/modules
+APP_MODULES_DIR="$APP_DIR"/modules
 
 # App utils paths
 APP_UTILS_DIR="$APP_DIR"/utils
