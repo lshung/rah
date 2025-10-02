@@ -37,7 +37,7 @@ create_symlink_to_this_app() {
 }
 
 create_log_dir_if_not_exists() {
-    mkdir -p "$APP_LOG_DIR"
+    mkdir -p "$LOG_DIR"
 }
 
 clean_up_log_files() {
@@ -55,16 +55,19 @@ parse_arguments() {
                 exit 0
                 ;;
             -i|--install)
+                log_info "Running command '$APP_NAME_LOWER $*'..."
                 source "$APP_SETUP_DIR/install.sh" "$@"
                 ;;
             -u|--update)
+                log_info "Running command '$APP_NAME_LOWER $*'..."
                 source "$APP_SETUP_DIR/update.sh" "$@"
                 ;;
             -x|--exec)
+                log_info "Running command '$APP_NAME_LOWER $*'..." "$LOG_SCRIPT_ENABLED"
                 source "$APP_SCRIPTS_DIR/exec.sh" "$@"
                 ;;
             *)
-                echo "Error: Invalid option '$1'"
+                log_error "Invalid option '$1'." "no"
                 show_usage
                 exit 1
                 ;;
@@ -76,11 +79,10 @@ show_usage() {
     echo "Usage: $APP_NAME_LOWER [OPTIONS]"
     echo ""
     echo "Options:"
-    echo "  -h, --help          Show help"
-    echo "  -i, --install       Install packages and configuration"
-    echo "  -u, --update        Update specific configuration or all"
-    echo "  -x, --exec          Execute script"
+    echo "    -h, --help        Show help"
+    echo "    -i, --install     Install packages and configuration"
+    echo "    -u, --update      Update configuration for a specific module or all"
+    echo "    -x, --exec        Execute a specific script"
 }
 
-# Call main function with arguments
 main "$@"
