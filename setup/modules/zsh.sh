@@ -36,4 +36,4 @@ test_new_config() {
     log_ok "New Zsh configuration tested successfully."
 }
 
-main "$@"
+main

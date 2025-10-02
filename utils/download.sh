@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -15,10 +14,10 @@ util_download_with_retry() {
     local retry_count=1
 
     while [ $retry_count -le $UTIL_DOWNLOAD_MAX_RETRIES ]; do
-        echo "Downloading $(basename "$output") (attempt $retry_count/$UTIL_DOWNLOAD_MAX_RETRIES)..."
+        log_info "Downloading '$(basename "$output")' (attempt $retry_count/$UTIL_DOWNLOAD_MAX_RETRIES)..."
 
         if _try_to_download_via_curl "$url" "$output"; then
-            echo "Downloaded $(basename "$output") successfully!"
+            log_ok "Downloaded '$(basename "$output")' successfully."
             return 0
         fi
 
@@ -42,10 +41,10 @@ _should_retry_to_download() {
     local retry_count="$1"
 
     if [ $retry_count -le $UTIL_DOWNLOAD_MAX_RETRIES ]; then
-        echo "Warning: Download failed, retrying after 3 seconds..."
+        log_warning "Download failed, retrying after 3 seconds..."
         sleep 3
     else
-        echo "Error: Download failed after $UTIL_DOWNLOAD_MAX_RETRIES attempts"
+        log_failed "Download failed after $UTIL_DOWNLOAD_MAX_RETRIES attempts."
         return 1
     fi
 }

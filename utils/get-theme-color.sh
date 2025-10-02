@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -46,7 +45,7 @@ _show_usage_to_get_theme_color() {
 
 _validate_minimum_number_of_arguments() {
     if [[ $# -lt 3 ]]; then
-        echo "Error: Not enough arguments" 1>&2
+        log_error "Not enough arguments."
         _show_usage_to_get_theme_color
         return 1
     fi
@@ -56,7 +55,7 @@ _validate_output_format() {
     local output_format="$1"
 
     if [[ ! "$output_format" =~ ^(hex|rgb|rgba)$ ]]; then
-        echo "Error: Invalid output format '$output_format'" 1>&2
+        log_error "Invalid output format '$output_format'."
         _show_usage_to_get_theme_color
         return 1
     fi
@@ -71,7 +70,7 @@ _validate_alpha_value_if_rgba() {
     fi
 
     if ! [[ "$alpha_value" =~ ^[0-9]*\.?[0-9]+$ ]] || (( $(echo "$alpha_value < 0" | bc -l) )) || (( $(echo "$alpha_value > 1" | bc -l) )); then
-        echo "Error: Invalid alpha value '$alpha_value'" 1>&2
+        log_error "Invalid alpha value '$alpha_value'."
         _show_usage_to_get_theme_color
         return 1
     fi
@@ -81,7 +80,7 @@ _check_if_color_file_exists() {
     local color_file="$1"
 
     if [ ! -f "$color_file" ]; then
-        echo "Error: Color file not found at '$color_file'" 1>&2
+        log_error "Color file not found at '$color_file'."
         return 1
     fi
 }
@@ -93,7 +92,7 @@ _get_hex_color_value_from_color_file() {
     local color_value=$(grep "^[[:space:]]*${color_name}[[:space:]]*:" "$color_file" | sed 's/.*:[[:space:]]*\(#[0-9a-fA-F]\{6\}\);.*/\1/')
 
     if [ -z "$color_value" ] || [[ ! "$color_value" =~ ^#[0-9a-fA-F]{6}$ ]]; then
-        echo "Error: Color '$color_name' not found or invalid format in $color_file" 1>&2
+        log_error "Color '$color_name' not found or invalid format in $color_file."
         return 1
     fi
 

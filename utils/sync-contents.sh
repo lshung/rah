@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -11,13 +10,13 @@ util_sync_contents_of_two_dirs() {
 
     _validate_two_dirs_provided "$source_dir" "$dest_dir" || return 1
 
-    echo "Syncing contents of $source_dir to $dest_dir..."
+    log_info "Synchronizing contents from '$source_dir' to '$dest_dir'..."
 
     _copy_files_if_new_or_different "$source_dir" "$dest_dir"
     _remove_files_in_destination_but_not_in_source "$source_dir" "$dest_dir"
     _remove_empty_dirs_in_destination_but_not_in_source "$source_dir" "$dest_dir"
 
-    echo "Sync contents completed!"
+    log_ok "Synchronized contents successfully."
 }
 
 _validate_two_dirs_provided() {
@@ -25,17 +24,17 @@ _validate_two_dirs_provided() {
     local dest_dir="$2"
 
     if [[ $# -ne 2 ]]; then
-        echo "Error: Two arguments are required"
+        log_error "Two arguments are required."
         return 1
     fi
 
     if [[ ! -d "$source_dir" ]]; then
-        echo "Error: Source directory '$source_dir' does not exist"
+        log_error "Source directory '$source_dir' does not exist."
         return 1
     fi
 
     if [[ ! -d "$dest_dir" ]]; then
-        echo "Error: Destination directory '$dest_dir' does not exist"
+        log_error "Destination directory '$dest_dir' does not exist."
         return 1
     fi
 }
@@ -53,7 +52,7 @@ _copy_files_if_new_or_different() {
 
         if [[ ! -f "$dest_file" ]] || ! cmp -s "$source_file" "$dest_file"; then
             cp --preserve=timestamps "$source_file" "$dest_file"
-            echo "Copied: $relative_path"
+            log_info "Copied file '$relative_path'."
         fi
     done
 }
@@ -75,7 +74,7 @@ _remove_files_in_destination_but_not_in_source() {
 
         if [[ ! -f "$source_file" ]]; then
             rm -f "$dest_file"
-            echo "Removed: $relative_path"
+            log_info "Removed file '$relative_path'."
         fi
     done
 }
@@ -93,7 +92,7 @@ _remove_empty_dirs_in_destination_but_not_in_source() {
 
         if [[ ! -d "$source_directory" ]] && [[ -z "$(ls -A "$dest_directory")" ]]; then
             rmdir "$dest_directory" 2>/dev/null
-            echo "Removed empty directory: $relative_path"
+            log_info "Removed empty directory '$relative_path'."
         fi
     done
 }

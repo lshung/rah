@@ -1,15 +1,13 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
 
 main() {
+    log_info "Updating SDDM configuration..."
+
     sudo -v
-
-    echo "Updating SDDM configuration..."
-
     declare_variables
     prepare_themes_dir
     download_theme
@@ -23,13 +21,13 @@ declare_variables() {
 }
 
 prepare_themes_dir() {
-    echo "Preparing themes directory..."
+    log_info "Preparing themes directory..."
 
     sudo mkdir -p "$SDDM_THEMES_DIR"
 }
 
 download_theme() {
-    echo "Downloading theme '$SDDM_THEME_NAME'..."
+    log_info "Downloading theme '$SDDM_THEME_NAME'..."
 
     if [[ "$SDDM_THEME_NAME" == "sugar-candy" ]]; then
         download_theme_sugar_candy
@@ -43,7 +41,7 @@ download_theme_sugar_candy() {
 }
 
 copy_wallpapers() {
-    echo "Copying wallpapers for '$SDDM_THEME_NAME'..."
+    log_info "Copying wallpapers for '$SDDM_THEME_NAME'..."
 
     if [[ "$SDDM_THEME_NAME" == "sugar-candy" ]]; then
         copy_wallpapers_for_sugar_candy
@@ -55,7 +53,7 @@ copy_wallpapers_for_sugar_candy() {
 }
 
 edit_theme_config() {
-    echo "Editing theme config for '$SDDM_THEME_NAME'..."
+    log_info "Editing theme config for '$SDDM_THEME_NAME'..."
 
     if [[ "$SDDM_THEME_NAME" == "sugar-candy" ]]; then
         edit_theme_config_for_sugar_candy
@@ -79,11 +77,10 @@ edit_theme_config_for_sugar_candy() {
 }
 
 set_current_theme() {
-    echo "Setting '$SDDM_THEME_NAME' as current theme..."
+    log_info "Setting '$SDDM_THEME_NAME' as current theme..."
 
     echo "[Theme]" | sudo tee "$SDDM_CONFIG_FILE" >/dev/null
     echo "Current=$SDDM_THEME_NAME" | sudo tee -a "$SDDM_CONFIG_FILE" >/dev/null
 }
 
-# Call main function
 main

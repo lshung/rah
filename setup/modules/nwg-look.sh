@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
 
-echo "Updating nwg-look configuration..."
+log_info "Updating nwg-look configuration..."
 
 # Declare variables
 THEMES_DIR="$HOME/.local/share/themes"
@@ -38,7 +37,7 @@ if util_download_with_retry "$DOWNLOAD_URL" "$OUTPUT_FILE"; then
     ln -sf "${THEME_DIR}/gtk-4.0/gtk.css" "${HOME}/.config/gtk-4.0/gtk.css" &&
     ln -sf "${THEME_DIR}/gtk-4.0/gtk-dark.css" "${HOME}/.config/gtk-4.0/gtk-dark.css"
 
-    echo "Catppuccin theme installed successfully!"
+    log_ok "Catppuccin theme installed successfully!"
 else
     exit 1
 fi
@@ -47,7 +46,7 @@ mkdir -p "$HOME"/.config/nwg-look
 rm -rf "$HOME"/.config/nwg-look/*
 
 # Create dynamic config file with current flavor and accent
-echo "Creating nwg-look gsettings file..."
+log_info "Creating nwg-look gsettings file..."
 
 # Create nwg-look directory if it doesn't exist
 mkdir -p "$HOME/.local/share/nwg-look"

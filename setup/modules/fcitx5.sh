@@ -1,21 +1,19 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
 
 main() {
-    echo "Updating Fcitx5 configuration..."
+    log_info "Updating Fcitx5 configuration..."
 
     declare_variables
     install_required_packages_if_missing
     prepare_config_dir
-    copy_profile
-    update_config
+    copy_config
     reload_fcitx5
 
-    echo "Setup completed. Please relogin or restart session to apply changes."
+    log_ok "Configuration updated successfully. Please relogin or restart session to apply changes."
 }
 
 declare_variables() {
@@ -23,7 +21,7 @@ declare_variables() {
 }
 
 install_required_packages_if_missing() {
-    echo "Installing required packages if missing..."
+    log_info "Installing required packages if missing..."
 
     local missing_packages=()
     for package in "${FCITX5_PACKAGES[@]}"; do
@@ -36,33 +34,46 @@ install_required_packages_if_missing() {
         sudo -v
         util_update_system
         util_install_packages "${missing_packages[@]}"
+
+        log_ok "Required packages installed successfully."
+        return 0
     fi
+
+    log_ok "There are no missing packages."
 }
 
 prepare_config_dir() {
-    echo "Preparing configuration directory..."
+    log_info "Preparing configuration directory..."
 
-    mkdir -p "$FCITX5_CONFIG_DIR"
+    if ! mkdir -p "$FCITX5_CONFIG_DIR"; then
+        log_failed "Failed to prepare configuration directory."
+        return 1
+    fi
+
+    log_ok "Configuration directory prepared successfully."
 }
 
-copy_profile() {
-    echo "Copying profile..."
+copy_config() {
+    log_info "Copying config files..."
 
-    cp "$APP_CONFIGS_FCITX5_DIR/profile" "$FCITX5_PROFILE_FILE"
-}
-
-update_config() {
-    echo "Updating config..."
-
-    sed -i "s/^ActiveByDefault=.*/ActiveByDefault=True/g" "$FCITX5_CONFIG_FILE"
-    sed -i "s/^ShowInputMethodInformation=.*/ShowInputMethodInformation=False/g" "$FCITX5_CONFIG_FILE"
+    if cp "$APP_CONFIGS_FCITX5_DIR/profile" "$FCITX5_PROFILE_FILE" \
+        && cp "$APP_CONFIGS_FCITX5_DIR/config" "$FCITX5_CONFIG_FILE"; then
+        log_ok "Config files copied successfully."
+    else
+        log_failed "Failed to copy config files."
+        return 1
+    fi
 }
 
 reload_fcitx5() {
-    echo "Reloading Fcitx5..."
+    log_info "Reloading Fcitx5..."
 
-    fcitx5-remote -r
+    if ! fcitx5-remote -r; then
+        log_failed "Failed to reload Fcitx5."
+        return 1
+    fi
+
+    log_ok "Fcitx5 reloaded successfully."
 }
 
-# Call main function
 main

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -49,17 +48,12 @@ parse_arguments() {
 }
 
 source_all_modules() {
-    source_module "kitty"
-    source_module "wlogout"
-    source_module "nwg-look"
-    source_module "qtct"
-    source_module "rofi"
-    source_module "kvantum"
-    source_module "sddm"
-    source_module "vscode"
-    source_module "zsh"
-    source_module "hyprland"
-    source_module "waybar"
+    modules_list=("kitty" "wlogout" "nwg-look" "qtct" "rofi" "kvantum" "sddm" "vscode" "zsh" "hyprland" "waybar")
+
+    for ((i = 0; i < ${#modules_list[@]}; i++)); do
+        if [[ "$i" -gt 0 ]]; then log_empty_line; fi
+        source_module "${modules_list[i]}"
+    done
 }
 
 source_module() {
@@ -69,7 +63,7 @@ source_module() {
     if [[ -r "$module_file" ]]; then
         source "$module_file"
     else
-        echo "Error: Module '$module_name' not found or not readable"
+        log_error "Module '$module_name' not found or not readable."
         exit 1
     fi
 }
@@ -95,5 +89,4 @@ show_usage() {
     echo "If no options are provided, all modules will be updated."
 }
 
-# Call main function with arguments
 main "$@"

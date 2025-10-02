@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Exit if this script is being executed directly
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { echo -e "[\033[31m ERRO \033[0m] This script cannot be executed directly." 1>&2; exit 1; }
 
 set -euo pipefail
@@ -12,9 +11,8 @@ source "$APP_CONFIGS_WLOGOUT_DIR/styles/$WLOGOUT_STYLE/config"
 ICON_NAMES=("hibernate" "lock" "logout" "reboot" "shutdown" "suspend")
 COLOR_NAMES=("$WLOGOUT_BUTTON_COLOR" "$WLOGOUT_BUTTON_HOVER_COLOR")
 
-# Main execution function
 main() {
-    echo "Updating Wlogout configuration..."
+    log_info "Updating Wlogout configuration..."
 
     prepare_config_dir
     setup_style
@@ -23,7 +21,7 @@ main() {
 
 # Function to prepare configuration directory
 prepare_config_dir() {
-    echo "Preparing configuration directory..."
+    log_info "Preparing configuration directory..."
 
     mkdir -p "$WLOGOUT_CONFIG_DIR"
     mkdir -p "$WLOGOUT_CONFIG_DIR/icons"
@@ -32,7 +30,7 @@ prepare_config_dir() {
 
 # Function to setup wlogout configuration
 setup_style() {
-    echo "Setting up style..."
+    log_info "Setting up style..."
 
     # Copy configuration files
     cp "$APP_CONFIGS_WLOGOUT_DIR/styles/$WLOGOUT_STYLE/layout" "$WLOGOUT_CONFIG_DIR/layout"
@@ -58,13 +56,13 @@ setup_style() {
 
 # Function to update icons if needed
 setup_icons() {
-    echo "Setting up icons..."
+    log_info "Setting up icons..."
 
     for icon in "${ICON_NAMES[@]}"; do
         process_single_icon "$icon"
     done
 
-    echo "Icon setup completed."
+    log_ok "Icon setup completed."
 }
 
 # Function to process a single icon with all color variants
@@ -73,7 +71,7 @@ process_single_icon() {
     local source_icon_file="$APP_CONFIGS_WLOGOUT_DIR/icons/${icon_name}.svg"
 
     if [ ! -f "$source_icon_file" ]; then
-        echo "Warning: Source icon not found: $source_icon_file"
+        log_warning "Source icon not found at '$source_icon_file'."
         return
     fi
 
@@ -97,11 +95,10 @@ create_themed_icon() {
 
         # Create themed icon by replacing the fill color
         sed "s/fill=\"#[0-9a-fA-F]\{6\}\"/fill=\"$color_value_hex\"/g" "$source_icon_file" > "$output_icon_file"
-        echo "Created: $output_icon_file"
+        log_info "Created file '$output_icon_file'."
     else
-        echo "Error: Failed to get color $color_name for theme $THEME_NAME-$THEME_FLAVOR"
+        log_error "Failed to get color '$color_name' for theme '$THEME_NAME-$THEME_FLAVOR'."
     fi
 }
 
-# Execute main function
 main
