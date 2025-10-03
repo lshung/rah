@@ -7,73 +7,73 @@ set -euo pipefail
 main() {
     log_info "Updating Fcitx5 configuration..."
 
-    declare_variables
-    install_required_packages_if_missing
-    prepare_config_dir
-    copy_config
-    reload_fcitx5
+    declare_variables || { log_failed "Failed to declare variables."; return 1; }
+    install_required_packages_if_missing || { log_failed "Failed to install required packages."; return 1; }
+    prepare_before_update || { log_failed "Failed to prepare before update."; return 1; }
+    copy_config_files || { log_failed "Failed to copy config files."; return 1; }
+    reload_fcitx5 || { log_failed "Failed to reload Fcitx5."; return 1; }
 
-    log_ok "Configuration updated successfully. Please relogin or restart session to apply changes."
+    log_ok "Fcitx5 configuration updated successfully."
+    log_warning "You may need to re-login or restart session to apply changes."
 }
 
 declare_variables() {
+    log_info "Declaring variables..."
+
     FCITX5_PACKAGES=(fcitx5 fcitx5-gtk fcitx5-qt fcitx5-configtool fcitx5-unikey)
+    FCITX5_MISSING_PACKAGES=()
 }
 
 install_required_packages_if_missing() {
     log_info "Installing required packages if missing..."
 
-    local missing_packages=()
-    for package in "${FCITX5_PACKAGES[@]}"; do
-        if ! util_check_if_package_is_installed "$package"; then
-            missing_packages+=("$package")
-        fi
-    done
+    get_missing_packages || { log_failed "Failed to get missing packages."; return 1; }
 
-    if [[ ${#missing_packages[@]} -gt 0 ]]; then
-        sudo -v
-        util_update_system
-        util_install_packages "${missing_packages[@]}"
-
-        log_ok "Required packages installed successfully."
+    if [[ ${#FCITX5_MISSING_PACKAGES[@]} -eq 0 ]]; then
+        log_info "There are no missing packages."
         return 0
     fi
 
-    log_ok "There are no missing packages."
+    log_warning "Missing packages: ${FCITX5_MISSING_PACKAGES[*]}."
+
+    install_required_packages || { log_failed "Failed to install required packages."; return 1; }
 }
 
-prepare_config_dir() {
-    log_info "Preparing configuration directory..."
+get_missing_packages() {
+    log_info "Getting missing packages..."
 
-    if ! mkdir -p "$FCITX5_CONFIG_DIR"; then
-        log_failed "Failed to prepare configuration directory."
-        return 1
-    fi
-
-    log_ok "Configuration directory prepared successfully."
+    for package in "${FCITX5_PACKAGES[@]}"; do
+        if ! util_check_if_package_is_installed "$package"; then
+            FCITX5_MISSING_PACKAGES+=("$package")
+        fi
+    done
 }
 
-copy_config() {
+install_required_packages() {
+    log_info "Installing required packages..."
+
+    sudo -v
+    util_update_system
+    util_install_packages "${FCITX5_MISSING_PACKAGES[@]}"
+}
+
+prepare_before_update() {
+    log_info "Preparing before update..."
+
+    mkdir -p "$FCITX5_CONFIG_DIR"
+}
+
+copy_config_files() {
     log_info "Copying config files..."
 
-    if cp "$APP_CONFIGS_FCITX5_DIR/profile" "$FCITX5_PROFILE_FILE" \
-        && cp "$APP_CONFIGS_FCITX5_DIR/config" "$FCITX5_CONFIG_FILE"; then
-        log_ok "Config files copied successfully."
-    else
-        log_failed "Failed to copy config files."
-        return 1
-    fi
+    cp "$APP_CONFIGS_FCITX5_DIR/profile" "$FCITX5_PROFILE_FILE"
+    cp "$APP_CONFIGS_FCITX5_DIR/config" "$FCITX5_CONFIG_FILE"
 }
 
 reload_fcitx5() {
     log_info "Reloading Fcitx5..."
 
-    if ! fcitx5-remote -r; then
-        log_failed "Failed to reload Fcitx5."
-        return 1
-    fi
-
-    log_ok "Fcitx5 reloaded successfully."
+    fcitx5-remote -r
 }
 
 main
