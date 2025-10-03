@@ -48,7 +48,7 @@ parse_arguments() {
 }
 
 source_all_modules() {
-    modules_list=("kitty" "wlogout" "nwg-look" "qtct" "rofi" "kvantum" "sddm" "vscode" "zsh" "hyprland" "waybar")
+    modules_list=("kitty" "rofi" "zsh" "vscode" "nwg-look" "qtct" "kvantum" "sddm" "hyprland" "waybar")
 
     for ((i = 0; i < ${#modules_list[@]}; i++)); do
         if [[ "$i" -gt 0 ]]; then log_empty_line; fi

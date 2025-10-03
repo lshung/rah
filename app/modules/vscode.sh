@@ -7,11 +7,15 @@ set -euo pipefail
 main() {
     log_info "Updating VSCode configuration..."
 
-    declare_variables
-    copy_config_to_existing_vscode_dirs
+    declare_variables || { log_failed "Failed to declare variables."; return 1; }
+    copy_config_to_existing_vscode_dirs || { log_failed "Failed to copy config to existing VSCode dirs."; return 1; }
+
+    log_ok "VSCode configuration updated successfully."
 }
 
 declare_variables() {
+    log_info "Declaring variables..."
+
     VSCODE_CONFIG_USER_DIRS=(
         "${CODE_CONFIG_USER_DIR}"
         "${CODEOSS_CONFIG_USER_DIR}"
@@ -21,9 +25,14 @@ declare_variables() {
 }
 
 copy_config_to_existing_vscode_dirs() {
+    log_info "Copying configuration to existing VSCode dirs..."
+
     for config_dir in "${VSCODE_CONFIG_USER_DIRS[@]}"; do
         if [[ -d "$config_dir" ]]; then
+            log_info "Copying configuration to '$config_dir'..."
             cp "$APP_CONFIGS_VSCODE_DIR/settings.json" "$config_dir/settings.json"
+        else
+            log_warning "Directory '$config_dir' does not exist, so skip copying."
         fi
     done
 }
