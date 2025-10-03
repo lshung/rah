@@ -7,15 +7,17 @@ set -euo pipefail
 main() {
     log_info "Updating Zsh configuration..."
 
-    prepare
-    sync_config
-    test_new_config
+    prepare_before_update || { log_failed "Failed to prepare before update."; return 1; }
+    sync_config || { log_failed "Failed to synchronize configuration."; return 1; }
+    test_new_config || { log_failed "Failed to test new configuration."; return 1; }
 
     log_ok "Zsh configuration updated successfully."
     log_warning "To apply changes, please manually run command 'source $HOME/.zshenv'"
 }
 
-prepare() {
+prepare_before_update() {
+    log_info "Preparing before update..."
+
     mkdir -p "$ZSH_CONFIG_DIR"
 }
 
@@ -25,14 +27,9 @@ sync_config() {
 }
 
 test_new_config() {
-    log_info "Testing new Zsh configuration..."
+    log_info "Testing new configuration..."
 
-    if ! zsh -c "source $ZSH_CONFIG_DIR/.zshrc"; then
-        log_failed "Failed to test new Zsh configuration."
-        return 1
-    fi
-
-    log_ok "New Zsh configuration tested successfully."
+    zsh -c "source $ZSH_CONFIG_DIR/.zshrc"
 }
 
 main
