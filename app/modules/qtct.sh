@@ -4,12 +4,29 @@
 
 set -euo pipefail
 
-log_info "Updating Qt5ct configuration..."
-mkdir -p "$HOME"/.config/qt5ct
-rm -rf "$HOME"/.config/qt5ct/*
-cp -r "$APP_CONFIGS_QT5CT_DIR"/* "$HOME"/.config/qt5ct/
+main() {
+    log_info "Updating Qt5ct and Qt6ct configuration..."
 
-log_info "Updating Qt6ct configuration..."
-mkdir -p "$HOME"/.config/qt6ct
-rm -rf "$HOME"/.config/qt6ct/*
-cp -r "$APP_CONFIGS_QT6CT_DIR"/* "$HOME"/.config/qt6ct/
+    prepare_before_update || { log_failed "Failed to prepare before update."; return 1; }
+    copy_config_files || { log_failed "Failed to copy config files."; return 1; }
+
+    log_ok "Qt5ct and Qt6ct configuration updated successfully."
+}
+
+prepare_before_update() {
+    log_info "Preparing before update..."
+
+    rm -rf "$QT5CT_CONFIG_DIR"
+    rm -rf "$QT6CT_CONFIG_DIR"
+    mkdir -p "$QT5CT_CONFIG_DIR"
+    mkdir -p "$QT6CT_CONFIG_DIR"
+}
+
+copy_config_files() {
+    log_info "Copying config files..."
+
+    cp "$APP_CONFIGS_QT5CT_DIR"/qt5ct.conf "$QT5CT_CONFIG_DIR"/
+    cp "$APP_CONFIGS_QT6CT_DIR"/qt6ct.conf "$QT6CT_CONFIG_DIR"/
+}
+
+main

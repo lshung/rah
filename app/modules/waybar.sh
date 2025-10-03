@@ -4,26 +4,46 @@
 
 set -euo pipefail
 
-log_info "Updating Waybar configuration..."
+main() {
+    log_info "Updating Waybar configuration..."
 
-# Declare variables
-WAYBAR_CONFIG_DIR="$HOME"/.config/waybar
+    prepare_before_update || { log_failed "Failed to prepare before update."; return 1; }
+    copy_config_files || { log_failed "Failed to copy config files."; return 1; }
+    edit_style_css_file || { log_failed "Failed to edit style.css file."; return 1; }
+    reload_waybar || { log_failed "Failed to reload Waybar."; return 1; }
 
-# Clean up Waybar config directory
-mkdir -p "$WAYBAR_CONFIG_DIR"
-rm -rf "$WAYBAR_CONFIG_DIR"/*
-mkdir -p "$WAYBAR_CONFIG_DIR"/colors
+    log_ok "Waybar configuration updated successfully."
+}
 
-# Copy Waybar configuration template
-cp "$APP_CONFIGS_WAYBAR_DIR/config.jsonc" "$WAYBAR_CONFIG_DIR"/config.jsonc
-cp "$APP_CONFIGS_WAYBAR_DIR/style.css" "$WAYBAR_CONFIG_DIR"/style.css
-cp "$APP_CONFIGS_WAYBAR_DIR/colors/$THEME_NAME-$THEME_FLAVOR.css" "$WAYBAR_CONFIG_DIR"/colors/
+prepare_before_update() {
+    log_info "Preparing before update..."
 
-# Edit Waybar configuration according to theme, flavor and accent
-sed -i "s/@@theme@@/$THEME_NAME/g" "$WAYBAR_CONFIG_DIR"/style.css
-sed -i "s/@@flavor@@/$THEME_FLAVOR/g" "$WAYBAR_CONFIG_DIR"/style.css
-sed -i "s/@@accent@@/$THEME_ACCENT/g" "$WAYBAR_CONFIG_DIR"/style.css
+    rm -rf "$WAYBAR_CONFIG_DIR"
+    mkdir -p "$WAYBAR_CONFIG_DIR"
+    mkdir -p "$WAYBAR_CONFIG_DIR"/colors
+}
 
-# Reload
-killall waybar >/dev/null 2>&1 || true
-waybar >/dev/null 2>&1 &
+copy_config_files() {
+    log_info "Copying config files..."
+
+    cp "$APP_CONFIGS_WAYBAR_DIR/config.jsonc" "$WAYBAR_CONFIG_DIR"/config.jsonc
+    cp "$APP_CONFIGS_WAYBAR_DIR/style.css" "$WAYBAR_CONFIG_DIR"/style.css
+    cp "$APP_CONFIGS_WAYBAR_DIR/colors/$THEME_NAME-$THEME_FLAVOR.css" "$WAYBAR_CONFIG_DIR"/colors/
+}
+
+edit_style_css_file() {
+    log_info "Editing style.css file..."
+
+    sed -i "s/@@theme@@/$THEME_NAME/g" "$WAYBAR_CONFIG_DIR"/style.css
+    sed -i "s/@@flavor@@/$THEME_FLAVOR/g" "$WAYBAR_CONFIG_DIR"/style.css
+    sed -i "s/@@accent@@/$THEME_ACCENT/g" "$WAYBAR_CONFIG_DIR"/style.css
+}
+
+reload_waybar() {
+    log_info "Reloading Waybar..."
+
+    killall waybar >/dev/null 2>&1 || true
+    waybar >/dev/null 2>&1 &
+}
+
+main
