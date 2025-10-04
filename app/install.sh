@@ -23,12 +23,12 @@ declare_variables() {
     MISSING_PACKAGES=()
 
     FONT_PACKAGES=("ttf-jetbrains-mono-nerd" "ttf-cascadia-code-nerd" "cantarell-fonts" "ttf-nerd-fonts-symbols")
-    ICON_PACKAGES=("tela-circle-icon-theme-all")
+    ICON_PACKAGES=("tela-circle-icon-theme-dracula")
     HYPRLAND_PACKAGES=("hyprland" "hypridle" "hyprlock" "hyprpicker" "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk")
     QT_PACKAGES=("qt5-wayland" "qt6-wayland" "qt5ct" "qt6ct" "kvantum" "kvantum-qt5")
     SDDM_PACKAGES=("sddm" "qt5-graphicaleffects" "qt5-quickcontrols2")
     BLUETOOTH_PACKAGES=("bluez" "bluez-utils" "blueman")
-    OTHER_PACKAGES=("bc" "cliphist" "firefox" "git" "jq" "kitty" "less" "nwg-displays" "nwg-look" "pavucontrol" "rofi" "swww" "unzip" "waybar" "zsh")
+    OTHER_PACKAGES=("archlinux-xdg-menu" "bc" "cliphist" "firefox" "git" "jq" "kitty" "less" "nwg-look" "pavucontrol" "rofi" "swww" "unzip" "waybar" "zsh")
 
     PACKAGES=(
         "${FONT_PACKAGES[@]}"
