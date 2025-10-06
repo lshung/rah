@@ -25,5 +25,5 @@ util_create_power_menu_icon() {
 
     mkdir -p "$(dirname "$output_icon_file")"
     cp "$source_icon_file" "$output_icon_file"
-    sed "s/fill=\"#[0-9a-fA-F]\{6\}\"/fill=\"$color_value_hex\"/g" "$source_icon_file" > "$output_icon_file"
+    sed 's/stroke="[^"]*"/stroke="'"$color_value_hex"'"/g' "$source_icon_file" > "$output_icon_file"
 }

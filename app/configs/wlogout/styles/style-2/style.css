@@ -13,7 +13,7 @@ button, button:focus {
     background-repeat: no-repeat;
     background-position: center;
     background-color: ${WLOGOUT_BUTTON_BACKGROUND_COLOR};
-    background-size: 20%;
+    background-size: 30%;
     border-radius: 0px;
     border-width: 0px;
     box-shadow: none;
@@ -26,7 +26,7 @@ button, button:focus {
 button:hover {
     color: ${WLOGOUT_TEXT_HOVER_COLOR};
     background-color: ${WLOGOUT_BUTTON_HOVER_BACKGROUND_COLOR};
-    background-size: 30%;
+    background-size: 40%;
     animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s cubic-bezier(.55,0.0,.28,1.682);
     margin: ${WLOGOUT_BUTTON_HOVER_MARGIN}px 0px ${WLOGOUT_BUTTON_HOVER_MARGIN}px 0px;
