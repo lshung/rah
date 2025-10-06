@@ -115,7 +115,7 @@ window#waybar.empty #window {
 #custom-clipboard,
 #custom-color-picker,
 #custom-fcitx5,
-#custom-logout {
+#custom-power-menu {
     color: @subtext1;
     background: alpha(@surface0, 0.8);
     padding: 0px 8px;
@@ -139,7 +139,7 @@ window#waybar.empty #window {
 #custom-clipboard:hover,
 #custom-color-picker:hover,
 #custom-fcitx5:hover,
-#custom-logout:hover,
+#custom-power-menu:hover,
 #temperature.critical:hover,
 #pulseaudio.muted:hover,
 #network.disconnected:hover,
@@ -164,14 +164,14 @@ window#waybar.empty #window {
     color: @surface0;
 }
 
-#custom-logout {
+#custom-power-menu {
     color: @base;
     background: @accent;
     margin-left: 10px;
     margin-right: 0;
 }
 
-#custom-logout:hover {
+#custom-power-menu:hover {
     background: shade(@accent, 0.95);
 }
 

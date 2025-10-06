@@ -1,0 +1,105 @@
+/*****----- Global colors -----*****/
+@theme "~/.config/rofi/colors/@@theme@@-@@flavor@@.rasi"
+
+* {
+    theme-background:           @base;
+    theme-text:                 @text;
+    theme-accent:               @@@accent@@;
+    separatorcolor:             transparent;
+    border-color:               transparent;
+}
+
+/*****----- Config -----*****/
+configuration {
+    show-icons:                 true;
+    font:                       "JetBrainsMono Nerd Font 15";
+    kb-cancel:                  "Escape,MousePrimary";
+}
+
+/*****----- Main window -----*****/
+window {
+    width:                      24em;
+    transparency:               "real";
+    fullscreen:                 false;
+    enabled:                    true;
+    cursor:                     "default";
+    spacing:                    0em;
+    padding:                    0em;
+    border-color:               @theme-accent;
+    border:                     2px;
+    border-radius:              10px;
+    background-color:           @theme-background;
+}
+
+/*****----- Main box -----*****/
+mainbox {
+    enabled:                    true;
+    spacing:                    0em;
+    padding:                    0em;
+    orientation:                vertical;
+    children:                   [ "listview" ];
+    background-color:           transparent;
+}
+
+/*****----- List view -----*****/
+listview {
+    padding:                    1em;
+    spacing:                    0.5em;
+    enabled:                    true;
+    columns:                    2;
+    lines:                      3;
+    cycle:                      true;
+    dynamic:                    true;
+    scrollbar:                  false;
+    layout:                     vertical;
+    flow:                       horizontal;
+    reverse:                    false;
+    fixed-height:               true;
+    fixed-columns:              true;
+    cursor:                     "default";
+    background-color:           transparent;
+    text-color:                 @theme-text;
+}
+
+/*****----- Elements -----*****/
+element {
+    enabled:                    true;
+    spacing:                    0em;
+    padding:                    0.5em;
+    cursor:                     pointer;
+    background-color:           transparent;
+    text-color:                 @theme-text;
+    border-radius:              2em;
+}
+element selected.normal {
+    background-color:           @theme-accent;
+    text-color:                 @theme-background;
+}
+element-icon {
+    size:                       2em;
+    cursor:                     inherit;
+    background-color:           transparent;
+    text-color:                 inherit;
+}
+element-text {
+    vertical-align:             0.5;
+    horizontal-align:           0.0;
+    cursor:                     inherit;
+    background-color:           transparent;
+    text-color:                 inherit;
+    padding:                    0.5em;
+}
+
+/*****----- Message -----*****/
+error-message {
+    text-color:                 @theme-text;
+    background-color:           @theme-background;
+    text-transform:             capitalize;
+    children:                   [ "textbox" ];
+}
+textbox {
+    text-color:                 inherit;
+    background-color:           inherit;
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+}

@@ -9,7 +9,7 @@
     "reload_style_on_change": true,
     "modules-left": ["custom/arch-logo", "hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "custom/fcitx5", "network", "bluetooth", "battery", "custom/key-bindings", "custom/color-picker", "custom/clipboard", "idle_inhibitor", "custom/logout"],
+    "modules-right": ["pulseaudio", "cpu", "memory", "temperature", "custom/fcitx5", "network", "bluetooth", "battery", "custom/key-bindings", "custom/color-picker", "custom/clipboard", "idle_inhibitor", "custom/power-menu"],
 
     // Hyprland-specific modules
     "hyprland/workspaces": {
@@ -165,9 +165,9 @@
         "on-click-right": "fcitx5-configtool"
     },
 
-    "custom/logout": {
+    "custom/power-menu": {
         "format": "\uf011",
-        "on-click": "rah -x wlogout",
+        "on-click": "rah -x power-menu",
         "tooltip": false,
         "interval": "once"
     },

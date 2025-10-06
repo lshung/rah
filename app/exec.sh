@@ -29,6 +29,7 @@ parse_arguments() {
             color-picker|\
             hyprlock|\
             key-bindings|\
+            power-menu|\
             rofi|\
             wallpaper|\
             wallpaper-selection|\
@@ -49,18 +50,19 @@ show_usage() {
     echo "Usage: $APP_NAME_LOWER $ACTION [SUBCOMMAND] [ARGS]"
     echo ""
     echo "Options:"
-    echo "  -h, --help              Show help"
+    echo "    -h, --help              Show help"
     echo ""
     echo "Subcommands:"
-    echo "  clipboard               Show clipboard history on rofi menu"
-    echo "  color-picker            Launch color picker application"
-    echo "  hyprlock                Launch hyprlock"
-    echo "  key-bindings            Show key bindings on terminal or rofi menu"
-    echo "  rofi                    Launch rofi"
-    echo "  wallpaper               Change wallpaper"
-    echo "  wallpaper-selection     Select wallpaper from rofi menu"
-    echo "  waybar-fcitx5           Display Fcitx5 input method in waybar"
-    echo "  wlogout                 Launch wlogout"
+    echo "    clipboard               Show clipboard history on rofi menu"
+    echo "    color-picker            Launch color picker application"
+    echo "    hyprlock                Launch hyprlock"
+    echo "    key-bindings            Show key bindings on terminal or rofi menu"
+    echo "    power-menu              Show power menu"
+    echo "    rofi                    Launch rofi"
+    echo "    wallpaper               Change wallpaper"
+    echo "    wallpaper-selection     Select wallpaper from rofi menu"
+    echo "    waybar-fcitx5           Display Fcitx5 input method in waybar"
+    echo "    wlogout                 Launch wlogout"
 }
 
 source_shell_script() {
