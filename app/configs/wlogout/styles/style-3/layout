@@ -1,24 +1,24 @@
 {
     "label": "lock",
-    "action": "rah -x hyprlock",
+    "action": "$POWER_MENU_LOCK_CMD",
     "text": "Lock",
     "keybind": "l"
 },
 {
     "label": "shutdown",
-    "action": "systemctl poweroff",
+    "action": "$POWER_MENU_SHUTDOWN_CMD",
     "text": "Shutdown",
     "keybind": "s"
 },
 {
     "label": "logout",
-    "action": "hyprctl dispatch exit 0",
+    "action": "$POWER_MENU_LOGOUT_CMD",
     "text": "Logout",
     "keybind": "e"
 },
 {
     "label": "reboot",
-    "action": "systemctl reboot",
+    "action": "$POWER_MENU_REBOOT_CMD",
     "text": "Reboot",
     "keybind": "r"
 }

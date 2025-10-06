@@ -2,10 +2,19 @@
 # DO NOT modify anything here
 # The variables can be overridden in the ~/.config/rah/rah.conf file
 
+# XDG Base Directories
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}"
+
 # Application
 APP_NAME="RAH"
 APP_NAME_LOWER="rah"
-APP_CONFIG_DIR="$HOME/.config/$APP_NAME_LOWER"
+APP_CACHE_DIR="$CACHE_DIR/$APP_NAME_LOWER"
+APP_CONFIG_DIR="$CONFIG_DIR/$APP_NAME_LOWER"
+APP_DATA_DIR="$DATA_DIR/$APP_NAME_LOWER"
+APP_STATE_DIR="$STATE_DIR/$APP_NAME_LOWER"
 APP_CONFIG_FILE="$APP_CONFIG_DIR/$APP_NAME_LOWER.conf"
 
 
@@ -13,7 +22,7 @@ APP_CONFIG_FILE="$APP_CONFIG_DIR/$APP_NAME_LOWER.conf"
 # LOG                                                              #
 ####################################################################
 
-LOG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/$APP_NAME_LOWER/logs"
+LOG_DIR="$APP_STATE_DIR/logs"
 LOG_FILE="$LOG_DIR/$(date +%Y-%m-%d-%H-%M-%S).log"
 LOG_FILE_COUNT=100
 LOG_TIMESTAMP_INCLUDED="no"
@@ -48,9 +57,6 @@ APP_MODULES_DIR="$APP_DIR"/modules
 # App utils paths
 APP_UTILS_DIR="$APP_DIR"/utils
 
-# Configs directories
-CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
-
 # Common applications
 KVANTUM_CONFIG_DIR="$CONFIG_DIR/Kvantum"
 WAYBAR_CONFIG_DIR="$CONFIG_DIR/waybar"
@@ -83,6 +89,9 @@ ROFI_CONFIG_DIR="$CONFIG_DIR/rofi"
 ROFI_CONFIG_STYLES_DIR="$ROFI_CONFIG_DIR/styles"
 ROFI_CONFIG_COLORS_DIR="$ROFI_CONFIG_DIR/colors"
 
+# Power menu
+POWER_MENU_CACHE_DIR="$APP_CACHE_DIR/power-menu"
+
 # SDDM
 SDDM_THEMES_DIR="/usr/share/sddm/themes"
 SDDM_CONFIG_DIR="/usr/lib/sddm/sddm.conf.d"
@@ -95,8 +104,8 @@ VSCODIUM_CONFIG_USER_DIR="$CONFIG_DIR/VSCodium/User"
 CURSOR_CONFIG_USER_DIR="$CONFIG_DIR/Cursor/User"
 
 # Wallpapers directories
-WALLPAPERS_DIR="$HOME/.local/share/wallpapers"
-CACHE_WALLPAPERS_DIR="$HOME/.cache/wallpapers"
+WALLPAPERS_DIR="$DATA_DIR/wallpapers"
+CACHE_WALLPAPERS_DIR="$CACHE_DIR/wallpapers"
 CACHE_WALLPAPERS_THUMBNAILS_DIR="$CACHE_WALLPAPERS_DIR/thumbnails"
 
 
@@ -117,8 +126,10 @@ HYPRLAND_COLOR_ACCENT2=""
 # Rofi
 ROFI_STYLE="style-1"
 
-# Wlogout
-WLOGOUT_STYLE="style-1"
+# Power menu
+POWER_MENU_APP="rofi"
+POWER_MENU_ROFI_STYLE="power-menu-1"
+POWER_MENU_WLOGOUT_STYLE="style-1"
 
 # SDDM
 SDDM_THEME_NAME="sugar-candy"
@@ -168,3 +179,11 @@ SWWW_TRANSITION_FPS=60
 # Color picker
 # See https://wiki.hypr.land/Hypr-Ecosystem/hyprpicker/ for more command arguments
 COLOR_PICKER_COMMAND="hyprpicker --autocopy --quiet"
+
+# Power menu
+POWER_MENU_LOCK_CMD="$APP_NAME_LOWER -x hyprlock"
+POWER_MENU_LOGOUT_CMD="hyprctl dispatch exit 0"
+POWER_MENU_SUSPEND_CMD="$APP_NAME_LOWER -x hyprlock & disown && systemctl suspend"
+POWER_MENU_HIBERNATE_CMD="systemctl hibernate"
+POWER_MENU_SHUTDOWN_CMD="systemctl poweroff"
+POWER_MENU_REBOOT_CMD="systemctl reboot"
