@@ -7,7 +7,7 @@
     theme-accent:               @@@accent@@;
     separatorcolor:             transparent;
     border-color:               transparent;
-    placeholder:                "Search key bindings";
+    placeholder:                "Search clipboard history";
 }
 
 /*****----- Config -----*****/
@@ -40,7 +40,7 @@ mainbox {
     orientation:                vertical;
     children:                   [ "inputbar" , "listbox" ];
     background-color:           transparent;
-    background-image:           url("~/.cache/wallpapers/original.jpg", width);
+    background-image:           url("~/.cache/rah/wallpapers/original.jpg", width);
 }
 
 /*****----- Input bar -----*****/

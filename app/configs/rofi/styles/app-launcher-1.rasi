@@ -7,19 +7,28 @@
     theme-accent:               @@@accent@@;
     separatorcolor:             transparent;
     border-color:               transparent;
-    placeholder:                "Search clipboard history";
 }
 
 /*****----- Config -----*****/
 configuration {
-    show-icons:                 false;
+    modi:                       "drun,filebrowser,window,run";
+    show-icons:                 true;
+    display-drun:               " ";
+    display-run:                " ";
+    display-filebrowser:        " ";
+    display-window:             " ";
+    drun-display-format:        "{name}";
+    window-format:              "{w}{t}";
     font:                       "JetBrainsMono Nerd Font 10";
+    icon-theme:                 "Tela-circle-dracula";
     kb-cancel:                  "Escape,MousePrimary";
+    kb-mode-next:               "Ctrl+Alt+Down,Ctrl+Alt+Right";
+    kb-mode-previous:           "Ctrl+Alt+Up,Ctrl+Alt+Left";
 }
 
 /*****----- Main window -----*****/
 window {
-    width:                      45em;
+    width:                      48em;
     transparency:               "real";
     fullscreen:                 false;
     enabled:                    true;
@@ -40,14 +49,14 @@ mainbox {
     orientation:                vertical;
     children:                   [ "inputbar" , "listbox" ];
     background-color:           transparent;
-    background-image:           url("~/.cache/wallpapers/original.jpg", width);
+    background-image:           url("~/.cache/rah/wallpapers/original.jpg", width);
 }
 
 /*****----- Input bar -----*****/
 inputbar {
     enabled:                    true;
     spacing:                    0em;
-    padding:                    2em 3em 2em 3em;
+    padding:                    4em;
     children:                   [ "entry" ];
     background-color:           transparent;
 }
@@ -56,10 +65,11 @@ entry {
     border-color:               @theme-accent;
     border-radius:              2em;
     enabled:                    true;
-    padding:                    0.5em;
+    spacing:                    1em;
+    padding:                    1em;
     text-color:                 @theme-text;
     background-color:           @theme-background;
-    font:                       "JetBrainsMono Nerd Font 12";
+    font:                       "JetBrainsMono Nerd Font 15";
     horizontal-align:           0.5;
 }
 
@@ -68,15 +78,15 @@ listbox {
     padding:                    0em;
     spacing:                    0em;
     orientation:                horizontal;
-    children:                   [ "listview" ];
+    children:                   [ "listview" , "mode-switcher" ];
     background-color:           @theme-background;
 }
 listview {
     padding:                    1em;
     spacing:                    0.5em;
     enabled:                    true;
-    columns:                    1;
-    lines:                      12;
+    columns:                    2;
+    lines:                      6;
     cycle:                      true;
     dynamic:                    true;
     scrollbar:                  false;
@@ -90,11 +100,34 @@ listview {
     text-color:                 @theme-text;
 }
 
+/*****----- Mode switcher -----*****/
+mode-switcher {
+    orientation:                vertical;
+    enabled:                    true;
+    padding:                    1em 1em 1em 0em;
+    spacing:                    1.5em;
+    background-color:           transparent;
+}
+button {
+    width:                      4em;
+    cursor:                     pointer;
+    border-radius:              2em;
+    background-color:           @theme-background;
+    text-color:                 @theme-text;
+    border:                     2px;
+    border-color:               @theme-accent;
+    font:                       "JetBrainsMono Nerd Font 15";
+}
+button selected {
+    background-color:           @theme-accent;
+    text-color:                 @theme-background;
+}
+
 /*****----- Elements -----*****/
 element {
     enabled:                    true;
     spacing:                    0em;
-    padding:                    0em;
+    padding:                    0.5em;
     cursor:                     pointer;
     background-color:           transparent;
     text-color:                 @theme-text;
@@ -103,6 +136,12 @@ element {
 element selected.normal {
     background-color:           @theme-accent;
     text-color:                 @theme-background;
+}
+element-icon {
+    size:                       2em;
+    cursor:                     inherit;
+    background-color:           transparent;
+    text-color:                 inherit;
 }
 element-text {
     vertical-align:             0.5;

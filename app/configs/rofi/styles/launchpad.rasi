@@ -51,7 +51,7 @@ mainbox {
     border-radius:              0px 0px 0px 0px;
     border-color:               @theme-accent;
     background-color:           transparent;
-    background-image:           url("~/.cache/wallpapers/blur.jpg");
+    background-image:           url("~/.cache/rah/wallpapers/blur.jpg");
     children:                   [ "inputbar", "listview" ];
 }
 

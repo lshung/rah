@@ -47,7 +47,7 @@ show_usage() {
     echo ""
     echo "Options:"
     echo "  -h, --help                 Show help"
-    echo "  -s, --style STYLE          Rofi style name under $ROFI_CONFIG_STYLES_DIR (e.g., style-1 without extension)"
+    echo "  -s, --style STYLE          Rofi style name under $ROFI_CONFIG_STYLES_DIR (e.g., app-launcher-1 without extension)"
 }
 
 validate_style_file_if_provided() {
