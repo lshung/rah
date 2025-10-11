@@ -13,6 +13,7 @@
 configuration {
     show-icons:                 true;
     font:                       "JetBrainsMono Nerd Font 13";
+    icon-theme:                 "Tela-circle-dracula";
     kb-cancel:                  "Escape,MousePrimary";
 }
 

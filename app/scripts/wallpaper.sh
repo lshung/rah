@@ -56,7 +56,7 @@ show_usage() {
 }
 
 start_swww_daemon_if_not_running() {
-    if ! pgrep -x "swww-daemon" > /dev/null; then
+    if ! pgrep -x "swww-daemon" >/dev/null; then
         echo "Starting swww-daemon..."
         swww-daemon &
         sleep 1  # Wait a bit for daemon to start

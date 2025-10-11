@@ -26,6 +26,7 @@ parse_arguments() {
                 ;;
             fcitx5|\
             hyprland|\
+            kdeglobals|\
             kitty|\
             kvantum|\
             nwg-look|\
@@ -48,7 +49,7 @@ parse_arguments() {
 }
 
 source_all_modules() {
-    modules_list=("kitty" "rofi" "zsh" "vscode" "nwg-look" "qtct" "kvantum" "sddm" "hyprland" "waybar")
+    modules_list=("kitty" "rofi" "zsh" "vscode" "nwg-look" "qtct" "kvantum" "kdeglobals" "sddm" "hyprland" "waybar")
 
     for ((i = 0; i < ${#modules_list[@]}; i++)); do
         if [[ "$i" -gt 0 ]]; then log_empty_line; fi
@@ -75,6 +76,7 @@ show_usage() {
     echo "  -h, --help      Show help"
     echo "  fcitx5          Update fcitx5 module"
     echo "  hyprland        Update hyprland module"
+    echo "  kdeglobals      Update kdeglobals module"
     echo "  kitty           Update kitty module"
     echo "  kvantum         Update kvantum module"
     echo "  nwg-look        Update nwg-look module"

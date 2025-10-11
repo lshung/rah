@@ -85,7 +85,7 @@ install_missing_packages() {
 run_post_install_commands() {
     log_info "Running post-install commands..."
 
-    if ! fc-cache -fv > /dev/null 2>&1; then
+    if ! fc-cache -fv >/dev/null 2>&1; then
         log_failed "Failed to reload font cache."
         return 1
     fi

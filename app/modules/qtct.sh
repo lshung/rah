@@ -25,8 +25,8 @@ prepare_before_update() {
 copy_config_files() {
     log_info "Copying config files..."
 
-    cp "$APP_CONFIGS_QT5CT_DIR"/qt5ct.conf "$QT5CT_CONFIG_DIR"/
-    cp "$APP_CONFIGS_QT6CT_DIR"/qt6ct.conf "$QT6CT_CONFIG_DIR"/
+    cp "$APP_CONFIGS_QTCT_DIR"/qt5ct.conf "$QT5CT_CONFIG_DIR"/
+    cp "$APP_CONFIGS_QTCT_DIR"/qt6ct.conf "$QT6CT_CONFIG_DIR"/
 }
 
 main
