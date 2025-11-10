@@ -1,6 +1,7 @@
 main() {
     define_colors
     remove_empty_space_at_right_end_of_prompt
+    set_instant_prompt_quiet
     modify_left_prompt_elements
     modify_right_prompt_elements
     set_icon_mode_and_padding
@@ -54,6 +55,10 @@ define_colors() {
 
 remove_empty_space_at_right_end_of_prompt() {
     ZLE_RPROMPT_INDENT=0
+}
+
+set_instant_prompt_quiet() {
+    POWERLEVEL9K_INSTANT_PROMPT=quiet
 }
 
 modify_left_prompt_elements() {
